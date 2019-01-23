@@ -1,0 +1,123 @@
+openapi: 3.0.0
+info:
+  title: Arengu REST API
+  description: List of available operations in Arengu platform.
+  termsOfService: https://www.arengu.com/terms-and-conditions.html
+  contact:
+    name: Arengu Support
+    email: support@arengu.com
+  version: '1.4'
+  x-logo":
+    url: https://www.arengu.com/assets/img/logo-arengu.png
+servers:
+  - url: https://api.arengu.com
+    description: Production server
+tags:
+  - name: Sessions
+    description: Create a temporal session using the credentials provided on registration.
+paths:
+  /private/sessions/:
+    post:
+      tags:
+        - Sessions
+      summary: Create a session
+      description: Creates a new session associated with the specified user.
+      operationId: createSession
+      requestBody:
+        $ref: '#/components/requestBodies/SessionCreation'
+      responses:
+        200:
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionObject'
+  /private/sessions/refresh:
+    post:
+      tags:
+        - Sessions
+      summary: Refresh a session
+      description: |
+        Creates a new session if all these conditions are satisfied:
+          - Current session is not expired.
+          - The related user did not change the password since the session was created.
+      operationId: refreshSession
+      responses:
+        200:
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionObject'
+components:
+  schemas:
+    SessionCreation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - credentials
+          default: credentials
+          description: Specifies the type of credentials you provide.
+        credentials:
+          type: object
+          description: Data that proves you own that account.
+          properties:
+            email:
+              type: string
+              description: Email address associated with the user.
+            passwordHash:
+              type: string
+              format: password
+              description: Hashed password provided on registration.
+          required:
+            - email
+            - passwordHash
+      required:
+        - type
+        - credentials
+      example:
+        type: credentials
+        credentials:
+          email: john.doe@example.com
+          passwordHash: a8ed0375fe4031438fb84e5f8
+    SessionObject:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Unique identifier for that user.
+        planId:
+          type: string
+          description: Identifier of the billing plan associated with that user.
+        token:
+          type: string
+          description: Session token you will have to provide in following requests.
+        createdAt:
+          type: string
+          format: date-time
+          description: Date when the session was created.
+        expiresAt:
+          type: string
+          format: date-time
+          description: Date when the new session expires.
+      required:
+        - userId
+        - planId
+        - token
+        - createdAt
+        - expiresAt
+      example:
+        userId: '154808587686619321'
+        planId: FREE2019
+        token: eyJhbGciOiJIUzUxMiIsInR5c
+        createdAt: '2019-01-23T12:08:42.951Z'
+        expiresAt: '2019-01-23T13:08:42.951Z'
+  requestBodies:
+    SessionCreation:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SessionCreation'
