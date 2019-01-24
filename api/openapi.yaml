@@ -74,9 +74,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SubmissionObject'
+                $ref: '#/components/schemas/SubmissionPage'
   /private/submissions/export:
     post:
       tags:
@@ -92,7 +90,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubmissionExport'
+              $ref: '#/components/schemas/SubmissionExportRequest'
       responses:
         200:
           description: Submissions exported successfully
@@ -101,12 +99,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SubmissionExported'
+                  $ref: '#/components/schemas/SubmissionExportResponse'
             text/csv:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SubmissionExported'
+                  $ref: '#/components/schemas/SubmissionExportResponse'
   /private/submissions/{submissionId}:
     parameters:
       - name: submissionId
@@ -141,28 +139,42 @@ paths:
                 $ref: '#/components/schemas/SubmissionObject'
 components:
   schemas:
-    PaginatedRequest:
+    PageRequest:
       type: object
       description: Specifies the page you want to retrieve.
       properties:
-        pagination:
-          type: object
-          properties:
-            page:
-              type: integer
-              minimum: 1
-              default: 1
-              description: Number of the page.
-            size:
-              type: integer
-              minimum: 1
-              default: 20
-              maximum: 50
-              description: Number of items per page.
+        page:
+          type: integer
+          minimum: 1
+          default: 1
+          description: Number of the page.
+        size:
+          type: integer
+          minimum: 1
+          default: 20
+          maximum: 50
+          description: Number of items per page.
       example:
-        pagination:
-          page: 1
-          size: 20
+        page: 1
+        size: 20
+    PageResponse:
+      type: object
+      description: Informational flags for page navigation
+      properties:
+        hasBefore:
+          type: boolean
+          default: fale
+          description: If true, you can request the previous page.
+        hasNext:
+          type: integer
+          default: false
+          description: If true, you can request the next page.
+      required:
+        - hasBefore
+        - hasNext
+      example:
+        hasBefore: false
+        hasNext: true
     SessionCreation:
       type: object
       properties:
@@ -226,6 +238,116 @@ components:
         token: eyJhbGciOiJIUzUxMiIsInR5c
         createdAt: '2019-01-23T12:08:42.951Z'
         expiresAt: '2019-01-23T13:08:42.951Z'
+    SubmissionBase:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for that submission.
+        formId:
+          type: string
+          description: Identifier of the form that generated the submission.
+        workspaceId:
+          type: string
+          description: Identifier of the workspace that groups the form and its submissions.
+        createdAt:
+          type: string
+          format: date-time
+          description: Date when the submission was created.
+      required:
+        - id
+        - formId
+        - workspaceId
+        - createdAt
+      example:
+        id: '154832182736611967'
+        formId: '154832175553844371'
+        workspaceId: '4504116097187840'
+        createdAt: '2019-01-24T09:23:47.366Z'
+    SubmissionExportRequest:
+      type: object
+      properties:
+        formId:
+          type: string
+          description: Identifier associated with the form.
+        format:
+          type: string
+          enum:
+            - CSV
+            - JSON
+          default: JSON
+          description: Format you want to export the data
+      required:
+        - formId
+      example:
+        formId: '154826972761382744'
+        format: CSV
+    SubmissionExportResponse:
+      allOf:
+        - $ref: '#/components/schemas/SubmissionBase'
+        - type: object
+          properties:
+            formData:
+              $ref: '#/components/schemas/SubmissionFormValues'
+            metaData:
+              $ref: '#/components/schemas/SubmissionMetaData'
+          required:
+            - formData
+            - metaData
+    SubmissionField:
+      type: object
+      description: Data provided by user for a specific field plus some extra information.
+      properties:
+        type:
+          type: string
+          description: Type of field.
+        value:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+    SubmissionFieldValue:
+      nullable: true
+      description: Value provided by user.
+    SubmissionFormData:
+      type: object
+      description: This map contains as many properties as fields have the form. The fields are indexed by their field identifiers and all the values have the same structure.
+      properties:
+        fieldId1:
+          $ref: '#/components/schemas/SubmissionField'
+        fieldIdN:
+          $ref: '#/components/schemas/SubmissionField'
+        hidddenFieldId1:
+          $ref: '#/components/schemas/SubmissionField'
+        hidddenFieldIdN:
+          $ref: '#/components/schemas/SubmissionField'
+      example:
+        name:
+          type: TEXT
+          value: John Doe
+        email:
+          type: EMAIL
+          value: john.doe@example.com
+        message:
+          type: TEXT
+          value: I want more information
+        referer:
+          type: HIDDEN
+          value: user123
+    SubmissionFormValues:
+      type: object
+      description: This map contains as many properties as fields have the form. The fields are indexed by their field identifiers.
+      properties:
+        fieldId1:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+        fieldIdN:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+        hiddenFieldId1:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+        hiddenFieldIdN:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+      example:
+        name: John Doe
+        email: john.doe@example.com
+        message: I want more information
+        referer: user123
     SubmissionMetaData:
       type: object
       description: Contains data collected automatically when someone submits a form.
@@ -371,119 +493,38 @@ components:
           window:
             width: 1860
             height: 950
-    SubmissionField:
-      type: object
-      description: Data provided by user for a specific field plus some extra information.
-      properties:
-        type:
-          type: string
-          description: Type of field.
-        value:
-          $ref: '#/components/schemas/SubmissionFieldValue'
-    SubmissionFieldValue:
-      nullable: true
-      description: Value provided by user.
-    SubmissionFormData:
-      type: object
-      description: This map contains as many properties as fields have the form. The fields are indexed by their field identifiers and all the values have the same structure.
-      properties:
-        fieldId1:
-          $ref: '#/components/schemas/SubmissionField'
-        fieldIdN:
-          $ref: '#/components/schemas/SubmissionField'
-        hidddenFieldId1:
-          $ref: '#/components/schemas/SubmissionField'
-        hidddenFieldIdN:
-          $ref: '#/components/schemas/SubmissionField'
-      example:
-        name:
-          type: TEXT
-          value: John Doe
-        email:
-          type: EMAIL
-          value: john.doe@example.com
-        message:
-          type: TEXT
-          value: I want more information
-        referer:
-          type: HIDDEN
-          value: user123
-    SubmissionFormValues:
-      type: object
-      description: This map contains as many properties as fields have the form. The fields are indexed by their field identifiers.
-      properties:
-        fieldId1:
-          $ref: '#/components/schemas/SubmissionFieldValue'
-        fieldIdN:
-          $ref: '#/components/schemas/SubmissionFieldValue'
-        hiddenFieldId1:
-          $ref: '#/components/schemas/SubmissionFieldValue'
-        hiddenFieldIdN:
-          $ref: '#/components/schemas/SubmissionFieldValue'
-      example:
-        name: John Doe
-        email: john.doe@example.com
-        message: I want more information
-        referer: user123
-    SubmissionBase:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for that submission.
-        formId:
-          type: string
-          description: Identifier of the form that generated the submission.
-        workspaceId:
-          type: string
-          description: Identifier of the workspace that groups the form and its submissions.
-        createdAt:
-          type: string
-          format: date-time
-          description: Date when the submission was created.
-      required:
-        - id
-        - formId
-        - workspaceId
-        - createdAt
-      example:
-        id: '154832182736611967'
-        formId: '154832175553844371'
-        workspaceId: '4504116097187840'
-        createdAt: '2019-01-24T09:23:47.366Z'
     SubmissionObject:
       allOf:
         - $ref: '#/components/schemas/SubmissionBase'
         - type: object
           properties:
-            metaData:
-              $ref: '#/components/schemas/SubmissionMetaData'
-          required:
-            - metaData
-        - type: object
-          properties:
             formData:
               $ref: '#/components/schemas/SubmissionFormData'
-          required:
-            - formData
-    SubmissionExported:
-      allOf:
-        - $ref: '#/components/schemas/SubmissionBase'
-        - type: object
-          properties:
             metaData:
               $ref: '#/components/schemas/SubmissionMetaData'
           required:
+            - formData
             - metaData
+    SubmissionPage:
+      allOf:
         - type: object
           properties:
-            formData:
-              $ref: '#/components/schemas/SubmissionFormValues'
+            pagination:
+              $ref: '#/components/schemas/PageResponse'
+            items:
+              type: array
+              description: List of submissions that match the criteria
+              items:
+                $ref: '#/components/schemas/SubmissionObject'
           required:
-            - formData
+            - pagination
+            - items
     SubmissionSearch:
       allOf:
-        - $ref: '#/components/schemas/PaginatedRequest'
+        - type: object
+          properties:
+            pagination:
+              $ref: '#/components/schemas/PageRequest'
         - type: object
           properties:
             formId:
@@ -496,21 +537,3 @@ components:
             - formId
           example:
             formId: '154826972761382744'
-    SubmissionExport:
-      type: object
-      properties:
-        formId:
-          type: string
-          description: Identifier associated with the form.
-        format:
-          type: string
-          enum:
-            - CSV
-            - JSON
-          default: JSON
-          description: Format you want to export the data
-      required:
-        - formId
-      example:
-        formId: '154826972761382744'
-        format: CSV
