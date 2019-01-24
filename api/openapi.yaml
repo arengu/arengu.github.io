@@ -15,6 +15,8 @@ servers:
 tags:
   - name: Sessions
     description: Create a temporal session using the credentials provided on registration.
+  - name: Submissions
+    description: Process the data received from an existing form.
 paths:
   /private/sessions/:
     post:
@@ -24,7 +26,11 @@ paths:
       description: Creates a new session associated with the specified user.
       operationId: createSession
       requestBody:
-        $ref: '#/components/requestBodies/SessionCreation'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionCreation'
       responses:
         200:
           description: Session created successfully
@@ -49,8 +55,114 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SessionObject'
+  /private/submissions/search:
+    post:
+      tags:
+        - Submissions
+      summary: Search submissions
+      description: Retrieves the latest received submissions sorted by descending processing date.
+      operationId: searchSubmissions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionSearch'
+      responses:
+        200:
+          description: Submissions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubmissionObject'
+  /private/submissions/export:
+    post:
+      tags:
+        - Submissions
+      summary: Export submissions
+      description: |
+        Exports all the received submissions sorted by descending processing date.
+
+        The Content-Type header depends on the format you specify.
+      operationId: exportSubmissions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionExport'
+      responses:
+        200:
+          description: Submissions exported successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubmissionExported'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubmissionExported'
+  /private/submissions/{submissionId}:
+    parameters:
+      - name: submissionId
+        in: path
+        description: Identifier of the implicated submission
+        required: true
+    get:
+      tags:
+        - Submissions
+      summary: Get a submission
+      description: Retrieves the specified submission.
+      operationId: getSubmission
+      responses:
+        200:
+          description: Submissions retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionObject'
+    delete:
+      tags:
+        - Submissions
+      summary: Delete a submission
+      description: Deletes the specified submission.
+      operationId: deleteSubmission
+      responses:
+        200:
+          description: Submissions deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionObject'
 components:
   schemas:
+    PaginatedRequest:
+      type: object
+      description: Specifies the page you want to retrieve.
+      properties:
+        pagination:
+          type: object
+          properties:
+            page:
+              type: integer
+              minimum: 1
+              default: 1
+              description: Number of the page.
+            size:
+              type: integer
+              minimum: 1
+              default: 20
+              maximum: 50
+              description: Number of items per page.
+      example:
+        pagination:
+          page: 1
+          size: 20
     SessionCreation:
       type: object
       properties:
@@ -93,7 +205,7 @@ components:
           description: Identifier of the billing plan associated with that user.
         token:
           type: string
-          description: Session token you will have to provide in following requests.
+          description: Session token for private requests.
         createdAt:
           type: string
           format: date-time
@@ -114,10 +226,291 @@ components:
         token: eyJhbGciOiJIUzUxMiIsInR5c
         createdAt: '2019-01-23T12:08:42.951Z'
         expiresAt: '2019-01-23T13:08:42.951Z'
-  requestBodies:
-    SessionCreation:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SessionCreation'
+    SubmissionMetaData:
+      type: object
+      description: Contains data collected automatically when someone submits a form.
+      properties:
+        navigator:
+          type: object
+          description: Information about the browser she uses.
+          properties:
+            userAgent:
+              type: string
+              description: Generic data about browser and operating system.
+            language:
+              type: string
+              description: Prefered language of the visitor.
+          required:
+            - userAgent
+            - language
+        navigation:
+          type: object
+          description: Information about the webpage where the form is embedded.
+          properties:
+            referer:
+              type: string
+              nullable: true
+              description: URL of the website that refered the user to the form.
+            location:
+              type: object
+              description: Structured data of the URL where the form is published.
+              properties:
+                url:
+                  type: string
+                  description: Complete URL of the page where user has filled in the form.
+                host:
+                  type: string
+                  description: Domain where the form is hosted.
+                path:
+                  type: string
+                  description: Path to the page that contains the form.
+                protocol:
+                  type: string
+                  description: Clarifies if the data was sent using https or not.
+                parameters:
+                  type: string
+                  description: Query params set when the submission was done.
+              required:
+                - url
+                - host
+                - path
+                - protocol
+                - parameters
+            analytics:
+              type: object
+              description: Structured parameters for analytical purposes.
+              properties:
+                ga:
+                  type: object
+                  description: Specific parameters for Google Analytics.
+                  properties:
+                    utm_source:
+                      type: string
+                      nullable: true
+                      description: Which site sent the traffic.
+                    utm_medium:
+                      type: string
+                      nullable: true
+                      description: What type of link was used (ie. cpc).
+                    utm_campaign:
+                      type: string
+                      nullable: true
+                      description: Specific product promotion or strategic campaign.
+                    utm_term:
+                      type: string
+                      nullable: true
+                      description: Search terms.
+                    utm_content:
+                      type: string
+                      nullable: true
+                      description: The specific item clicked to bring the user to the site.
+              required:
+                - ga
+          required:
+            - location
+            - analytics
+        view:
+          type: object
+          description: Information about the size of the view port and the screen
+          properties:
+            screen:
+              type: object
+              description: Size of the screen where the browser is displayed
+              properties:
+                width:
+                  type: integer
+                  description: Width of the screen in pixels
+                height:
+                  type: integer
+                  description: Height of the screen in pixels
+              required:
+                - width
+                - height
+            window:
+              type: object
+              description: Size of the view port (browser excluding toolbars and bookmarks)
+              properties:
+                width:
+                  type: integer
+                  description: Width of the view port in pixels
+                height:
+                  type: integer
+                  description: Height of the view port in pixels
+              required:
+                - width
+                - height
+          required:
+            - screen
+            - window
+      required:
+        - navigator
+        - navigation
+        - view
+      example:
+        navigator:
+          language: en-US
+          userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+        navigation:
+          location:
+            url: https://www.example.com/contact
+            host: www.example.com
+            path: /contact
+            protocol: 'https:'
+            parameters: '?referer=user123&utm_medium=email&utm_source=promo_email&utm_content=copy_variation1&utm_campaign=january_promo'
+          analytics:
+            ga:
+              utm_term: null,
+              utm_medium: email
+              utm_source: promo_email
+              utm_content: copy_variation1
+              utm_campaign: january_promo
+        view:
+          screen:
+            width: 1920
+            height: 1080
+          window:
+            width: 1860
+            height: 950
+    SubmissionField:
+      type: object
+      description: Data provided by user for a specific field plus some extra information.
+      properties:
+        type:
+          type: string
+          description: Type of field.
+        value:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+    SubmissionFieldValue:
+      nullable: true
+      description: Value provided by user.
+    SubmissionFormData:
+      type: object
+      description: This map contains as many properties as fields have the form. The fields are indexed by their field identifiers and all the values have the same structure.
+      properties:
+        fieldId1:
+          $ref: '#/components/schemas/SubmissionField'
+        fieldIdN:
+          $ref: '#/components/schemas/SubmissionField'
+        hidddenFieldId1:
+          $ref: '#/components/schemas/SubmissionField'
+        hidddenFieldIdN:
+          $ref: '#/components/schemas/SubmissionField'
+      example:
+        name:
+          type: TEXT
+          value: John Doe
+        email:
+          type: EMAIL
+          value: john.doe@example.com
+        message:
+          type: TEXT
+          value: I want more information
+        referer:
+          type: HIDDEN
+          value: user123
+    SubmissionFormValues:
+      type: object
+      description: This map contains as many properties as fields have the form. The fields are indexed by their field identifiers.
+      properties:
+        fieldId1:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+        fieldIdN:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+        hiddenFieldId1:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+        hiddenFieldIdN:
+          $ref: '#/components/schemas/SubmissionFieldValue'
+      example:
+        name: John Doe
+        email: john.doe@example.com
+        message: I want more information
+        referer: user123
+    SubmissionBase:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for that submission.
+        formId:
+          type: string
+          description: Identifier of the form that generated the submission.
+        workspaceId:
+          type: string
+          description: Identifier of the workspace that groups the form and its submissions.
+        createdAt:
+          type: string
+          format: date-time
+          description: Date when the submission was created.
+      required:
+        - id
+        - formId
+        - workspaceId
+        - createdAt
+      example:
+        id: '154832182736611967'
+        formId: '154832175553844371'
+        workspaceId: '4504116097187840'
+        createdAt: '2019-01-24T09:23:47.366Z'
+    SubmissionObject:
+      allOf:
+        - $ref: '#/components/schemas/SubmissionBase'
+        - type: object
+          properties:
+            metaData:
+              $ref: '#/components/schemas/SubmissionMetaData'
+          required:
+            - metaData
+        - type: object
+          properties:
+            formData:
+              $ref: '#/components/schemas/SubmissionFormData'
+          required:
+            - formData
+    SubmissionExported:
+      allOf:
+        - $ref: '#/components/schemas/SubmissionBase'
+        - type: object
+          properties:
+            metaData:
+              $ref: '#/components/schemas/SubmissionMetaData'
+          required:
+            - metaData
+        - type: object
+          properties:
+            formData:
+              $ref: '#/components/schemas/SubmissionFormValues'
+          required:
+            - formData
+    SubmissionSearch:
+      allOf:
+        - $ref: '#/components/schemas/PaginatedRequest'
+        - type: object
+          properties:
+            formId:
+              type: string
+              description: Identifier associated with the form.
+            filter:
+              type: object
+              description: Excludes non relevant submissions.
+          required:
+            - formId
+          example:
+            formId: '154826972761382744'
+    SubmissionExport:
+      type: object
+      properties:
+        formId:
+          type: string
+          description: Identifier associated with the form.
+        format:
+          type: string
+          enum:
+            - CSV
+            - JSON
+          default: JSON
+          description: Format you want to export the data
+      required:
+        - formId
+      example:
+        formId: '154826972761382744'
+        format: CSV
