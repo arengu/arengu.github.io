@@ -710,29 +710,28 @@ components:
             debug:
               $ref: '#/components/schemas/ExecutionDebug'
     ExecutionPage:
-      allOf:
-        - type: object
-          properties:
-            pagination:
-              $ref: '#/components/schemas/PageResponse'
-            items:
-              type: array
-              description: List of executions that match the criteria
-              items:
-                $ref: '#/components/schemas/ExecutionObject'
-          required:
-            - pagination
-            - items
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PageResponse'
+        items:
+          type: array
+          description: List of executions that match the criteria
+          items:
+            $ref: '#/components/schemas/ExecutionObject'
+      required:
+        - pagination
+        - items
     ExecutionSearch:
       type: object
       properties:
         flowId:
           type: string
           description: Identifier associated with the flow.
-        pagination:
-          $ref: '#/components/schemas/PageRequest'
         filter:
           $ref: '#/components/schemas/ExecutionSearchFilter'
+        pagination:
+          $ref: '#/components/schemas/PageRequest'
       required:
         - flowId
     ExecutionSearchFilter:
@@ -1082,32 +1081,28 @@ components:
             - formData
             - metaData
     SubmissionPage:
-      allOf:
-        - type: object
-          properties:
-            pagination:
-              $ref: '#/components/schemas/PageResponse'
-            items:
-              type: array
-              description: List of submissions that match the criteria
-              items:
-                $ref: '#/components/schemas/SubmissionObject'
-          required:
-            - pagination
-            - items
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/PageResponse'
+        items:
+          type: array
+          description: List of submissions that match the criteria
+          items:
+            $ref: '#/components/schemas/SubmissionObject'
+      required:
+        - pagination
+        - items
     SubmissionSearch:
-      allOf:
-        - type: object
-          properties:
-            pagination:
-              $ref: '#/components/schemas/PageRequest'
-        - type: object
-          properties:
-            formId:
-              type: string
-              description: Identifier associated with the form.
-            filter:
-              type: object
-              description: Excludes non relevant submissions.
-          required:
-            - formId
+      type: object
+      properties:
+        formId:
+          type: string
+          description: Identifier associated with the form.
+        filter:
+          type: object
+          description: Excludes non relevant submissions.
+        pagination:
+          $ref: '#/components/schemas/PageRequest'
+      required:
+        - formId
