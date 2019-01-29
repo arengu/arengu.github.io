@@ -7,17 +7,97 @@ info:
     name: Arengu Support
     email: support@arengu.com
   version: '1.4'
-  x-logo":
-    url: https://www.arengu.com/assets/img/logo-arengu.png
 servers:
   - url: https://api.arengu.com
     description: Production server
 tags:
+  - name: Executions
+    description: Check all the requests received by existing flows.
   - name: Sessions
     description: Create a temporal session using the credentials provided on registration.
   - name: Submissions
-    description: Process the data received from an existing form.
+    description: Process the data received from a published form.
 paths:
+  /private/executions/search:
+    post:
+      tags:
+        - Executions
+      summary: Search executions
+      description: Retrieves the latest processed requests sorted by descending processing date.
+      operationId: searchExecutions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionSearch'
+            examples:
+              simple:
+                $ref: '#/components/examples/ExecutionSearchSimple'
+              advanced:
+                $ref: '#/components/examples/ExecutionSearchAdvanced'
+      responses:
+        200:
+          description: Executions retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionPage'
+              examples:
+                default:
+                  $ref: '#/components/examples/ExecutionSearchResults'
+  /private/executions/{executionId}:
+    parameters:
+      - name: executionId
+        in: path
+        schema:
+          type: string
+        description: Identifier of the implicated execution
+        required: true
+        example: 154878272714586010
+    get:
+      tags:
+        - Executions
+      summary: Get a execution
+      description: Retrieves the specified execution.
+      operationId: getExecution
+      parameters:
+        - name: debug
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: If true, debug information is included into the response.
+      responses:
+        200:
+          description: Executions retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionObjectWithDebug'
+              examples:
+                default:
+                  $ref: '#/components/examples/ExecutionObject'
+                debug/success:
+                  $ref: '#/components/examples/ExecutionObjectWithDebugCompleted'
+                debug/failure:
+                  $ref: '#/components/examples/ExecutionObjectWithDebugFailed'
+    delete:
+      tags:
+        - Executions
+      summary: Delete a execution
+      description: Deletes the specified execution.
+      operationId: deleteExecution
+      responses:
+        200:
+          description: Execution deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionObject'
+              examples:
+                default:
+                  $ref: '#/components/examples/ExecutionObject'
   /private/sessions/:
     post:
       tags:
@@ -109,6 +189,8 @@ paths:
     parameters:
       - name: submissionId
         in: path
+        schema:
+          type: string
         description: Identifier of the implicated submission
         required: true
     get:
@@ -132,13 +214,386 @@ paths:
       operationId: deleteSubmission
       responses:
         200:
-          description: Submissions deleted successfully
+          description: Submission deleted successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubmissionObject'
 components:
+  examples:
+    ExecutionObject:
+      summary: default
+      value:
+        id: '154878272714586010'
+        flowId: '154878267316346394'
+        flowName: User onboarding
+        workspaceId: '4504116097187840'
+        status: COMPLETED
+        createdAt: '2019-01-29T17:25:27.145Z'
+        startedAt: '2019-01-29T17:25:27.126Z'
+        endedAt: '2019-01-29T17:25:28.302Z'
+        updatedAt: '2019-01-29T17:25:28.303Z'
+    ExecutionObjectWithDebugCompleted:
+      summary: +debug (completed)
+      value:
+        id: '154878322445775790'
+        flowId: '154878319988646444'
+        flowName: Events processor
+        workspaceId: '4504116097187840'
+        status: COMPLETED
+        createdAt: '2019-01-29T17:33:44.457Z'
+        startedAt: '2019-01-29T17:33:44.470Z'
+        endedAt: '2019-01-29T17:33:44.471Z'
+        updatedAt: '2019-01-29T17:33:44.472Z'
+        debug:
+          input:
+            headers:
+              content-type:	application/json;charset=UTF-8
+              authorization: Bearer gzxDxj8FU5F3jAd
+            body:
+              resourceId: 4756234
+              storeId: 2432
+              event: sold_out
+          output:
+            status: 200
+            headers:
+              content-type:	application/json;charset=UTF-8
+            body:
+              processed: true
+          error: null
+          tracing:
+            - id: forwardEvent
+              alias: Forward event
+              type: HTTP
+              action: SEND_REQUEST
+              input:
+                url: https://api.example.com/events
+                method: POST
+                headers:
+                  content-type: application/json;charset=UTF-8
+                basic: null
+                body:
+                  resourceId: 4756234
+                  storeId: 2432
+                  event: sold_out
+                type: JSON
+                acceptNOK: false
+              output:
+                status: 200
+                headers:
+                  content-type: application/json;charset=UTF-8
+                body:
+                  responseCode: 'OK'
+              error: null
+            - id: returnResponse
+              alias: Return response
+              type: FLOW
+              action: RETURN_RESPONSE
+              input:
+                status: 200
+                headers:
+                  content-type: application/json;charset=UTF-8
+                body:
+                  processed: true
+              output:
+                status: 200
+                headers:
+                  content-type: application/json;charset=UTF-8
+                body:
+                  processed: true
+              error: null
+    ExecutionObjectWithDebugFailed:
+      summary: +debug (failed)
+      value:
+        id: '154878377231934820'
+        flowId: '154878376255333219'
+        flowName: Event listener
+        workspaceId: '4504116097187840'
+        status: FAILED
+        createdAt: '2019-01-29T17:42:52.319Z'
+        startedAt: '2019-01-29T17:42:52.327Z'
+        endedAt: '2019-01-29T17:42:52.333Z'
+        updatedAt: '2019-01-29T17:42:52.334Z'
+        debug:
+          input:
+            headers:
+              content-type:	application/json;charset=UTF-8
+              authorization: Bearer gzxDxj8FU5F3jAd
+            body:
+              event: form_focus
+              formId: contactForm
+          output: null
+          error:
+            actionId: forwardEvent
+            actionAlias: Forward event
+            code: ERR_ACTION_EXECUTION_ERROR
+            message: 'Server returned non success code: 404'
+          tracing:
+            - id: forwardEvent
+              alias: Forward event
+              type: HTTP
+              action: SEND_REQUEST
+              input:
+                url: https://api.example.com/events
+                method: POST
+                headers:
+                  content-type: application/json;charset=UTF-8
+                basic: null
+                body:
+                  event: form_focus
+                  formId: contactForm
+                type: JSON
+                acceptNOK: false
+              output: null
+              error:
+                actionId: forwardEvent
+                actionAlias: Forward event
+                code: ERR_ACTION_EXECUTION_ERROR
+                message: 'Server returned non success code: 404'
+    ExecutionSearchAdvanced:
+      summary: advanced
+      value:
+        flowId: '154878388287661012'
+        filter:
+          from: '2019-01-29T17:30:00.000'
+          to: '2019-01-29T18:00:00.000'
+          status: DELAYED
+        pagination:
+          page: 1
+          size: 20
+    ExecutionSearchResults:
+      summary: default
+      value:
+        pagination:
+          hasBefore: false
+          hasNext: true
+        items:
+          - id: '154878389526377252'
+            flowId: '154878388287661012'
+            flowName: Update customer
+            workspaceId: '4504116097187840'
+            status: DELAYED
+            createdAt: 2019-01-29T17:44:55.263Z'
+            startedAt: 2019-01-29T17:45:14.263Z'
+            endedAt: 2019-01-29T17:44:55.275Z'
+            updatedAt: '2019-01-29T17:44:55.276Z'
+    ExecutionSearchSimple:
+      summary: simple
+      value:
+        flowId: '154878388287661012'
   schemas:
+    ActionError:
+      allOf:
+        - $ref: '#/components/schemas/AppError'
+        - type: object
+          properties:
+            actionId:
+              type: string
+              description: Identifier of the action that caused the problem.
+            actionAlias:
+              type: string
+              description: Alias of the related action.
+          required:
+            - actionId
+            - actionAlias
+    AppError:
+      type: object
+      description: Base model for application errors.
+      properties:
+        code:
+          type: string
+          description: Error code that identifies the problem.
+        message:
+          type: string
+          description: Technical explanation of the error.
+        details:
+          type: object
+          description: Additional informaton of the failure.
+      required:
+        - code
+        - message
+        - details
+    ExecutionRequest:
+      type: object
+      description: Data sent by user on request
+      properties:
+        headers:
+          type: object
+          description: HTTP headers. Header keys are transformed to lower case.
+        body:
+          type: string
+          default: {}
+          description: Request payload
+      required:
+        - headers
+        - body
+    ExecutionResponse:
+      type: object
+      description: Data sent to user when execution was processed
+      properties:
+        headers:
+          type: object
+          default: {}
+          description: HTTP headers
+        status:
+          type: integer
+          description: HTTP status code
+          minimum: 200
+          default: 200
+          maximum: 599
+        body:
+          type: string
+          default: {}
+          description: Response payload
+    ExecutionDebug:
+      type: object
+      properties:
+        input:
+          $ref: '#/components/schemas/ExecutionRequest'
+        output:
+          $ref: '#/components/schemas/ExecutionResponse'
+        error:
+          $ref: '#/components/schemas/ActionError'
+        tracing:
+          $ref: '#/components/schemas/ExecutionTracing'
+      required:
+        - input
+        - tracing
+    ExecutionObject:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for that execution.
+        flowId:
+          type: string
+          description: Identifier of the flow associated with the execution.
+        flowName:
+          type: string
+          description: Name of the related flow.
+        workspaceId:
+          type: string
+          description: Identifier of the workspace that groups the flow and its executions.
+        status:
+          type: string
+          description: Current status of the request
+          enum:
+            - PENDING
+            - RUNNING
+            - DELAYED
+            - COMPLETED
+            - FAILED
+        createdAt:
+          type: string
+          format: date-time
+          description: Date when the session was received.
+        startedAt:
+          type: string
+          format: date-time
+          description: Date when server started to process it.
+        endedAt:
+          type: string
+          format: date-time
+          description: Date when the request was completely processed.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last moment when the status was updated.
+      required:
+        - id
+        - flowId
+        - flowName
+        - workspaceId
+        - status
+        - createdAt
+    ExecutionObjectWithDebug:
+      allOf:
+        - $ref: '#/components/schemas/ExecutionObject'
+        - type: object
+          properties:
+            debug:
+              $ref: '#/components/schemas/ExecutionDebug'
+    ExecutionPage:
+      allOf:
+        - type: object
+          properties:
+            pagination:
+              $ref: '#/components/schemas/PageResponse'
+            items:
+              type: array
+              description: List of executions that match the criteria
+              items:
+                $ref: '#/components/schemas/ExecutionObject'
+          required:
+            - pagination
+            - items
+    ExecutionSearch:
+      type: object
+      properties:
+        flowId:
+          type: string
+          description: Identifier associated with the flow.
+        pagination:
+          $ref: '#/components/schemas/PageRequest'
+        filter:
+          $ref: '#/components/schemas/ExecutionSearchFilter'
+      required:
+        - flowId
+    ExecutionSearchFilter:
+      type: object
+      description: Excludes non relevant executions.
+      properties:
+        from:
+          type: string
+          format: date-time
+          description: Excludes all executions received before the specified date (<=).
+        to:
+          type: string
+          format: date-time
+          description: Excludes all executions that were *not* received before the specified date (<).
+        status:
+          type: string
+          description: Excludes all executions whose statuses does not equal the specified one.
+          enum:
+            - PENDING
+            - RUNNING
+            - DELAYED
+            - COMPLETED
+            - FAILED
+    ExecutionTracing:
+      type: array
+      description: Details of each executed action for debugging purposes.
+      items:
+        $ref: '#/components/schemas/ExecutionTracingItem'
+    ExecutionTracingItem:
+      type: object
+      description: Input and output of each executed action.
+      properties:
+        id:
+          type: string
+          description: Action identifier.
+        alias:
+          type: string
+          description: Action alias.
+        type:
+          type: string
+          description: Action type.
+        action:
+          type: string
+          description: Kind of action.
+        input:
+          type: object
+          description: Calculated params after variables replacements
+        output:
+          type: object
+          description: Information obtained on action execution
+        error:
+          $ref: '#/components/schemas/ActionError'
+      required:
+        - id
+        - type
+        - action
+        - input
     PageRequest:
       type: object
       description: Specifies the page you want to retrieve.
@@ -304,7 +759,6 @@ components:
         value:
           $ref: '#/components/schemas/SubmissionFieldValue'
     SubmissionFieldValue:
-      nullable: true
       description: Value provided by user.
     SubmissionFormData:
       type: object
@@ -371,7 +825,6 @@ components:
           properties:
             referer:
               type: string
-              nullable: true
               description: URL of the website that refered the user to the form.
             location:
               type: object
@@ -408,23 +861,18 @@ components:
                   properties:
                     utm_source:
                       type: string
-                      nullable: true
                       description: Which site sent the traffic.
                     utm_medium:
                       type: string
-                      nullable: true
                       description: What type of link was used (ie. cpc).
                     utm_campaign:
                       type: string
-                      nullable: true
                       description: Specific product promotion or strategic campaign.
                     utm_term:
                       type: string
-                      nullable: true
                       description: Search terms.
                     utm_content:
                       type: string
-                      nullable: true
                       description: The specific item clicked to bring the user to the site.
               required:
                 - ga
