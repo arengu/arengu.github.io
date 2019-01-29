@@ -110,7 +110,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionCreation'
+              $ref: '#/components/schemas/SessionCreate'
+            examples:
+              default:
+                $ref: '#/components/examples/SessionCreate'
       responses:
         200:
           description: Session created successfully
@@ -118,6 +121,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SessionObject'
+              examples:
+                default:
+                  $ref: '#/components/examples/SessionObject'
   /private/sessions/refresh:
     post:
       tags:
@@ -135,6 +141,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SessionObject'
+              examples:
+                default:
+                  $ref: '#/components/examples/SessionObject'
   /private/submissions/search:
     post:
       tags:
@@ -381,6 +390,28 @@ components:
       summary: simple
       value:
         flowId: '154878388287661012'
+    SessionCreate:
+      summary: default
+      value:
+        type: credentials
+        credentials:
+          email: john.doe@example.com
+          passwordHash: a8ed0375fe4031438fb84e5f8
+    SessionObject:
+      summary: default
+      value:
+        userId: '154808587686619321'
+        planId: FREE2019
+        token: eyJhbGciOiJIUzUxMiIsInR5c
+        createdAt: '2019-01-23T12:08:42.951Z'
+        expiresAt: '2019-01-23T13:08:42.951Z'
+    SessionRefresh:
+      summary: default
+      value:
+        type: credentials
+        credentials:
+          email: john.doe@example.com
+          passwordHash: a8ed0375fe4031438fb84e5f8
   schemas:
     ActionError:
       allOf:
@@ -630,7 +661,7 @@ components:
       example:
         hasBefore: false
         hasNext: true
-    SessionCreation:
+    SessionCreate:
       type: object
       properties:
         type:
@@ -656,11 +687,6 @@ components:
       required:
         - type
         - credentials
-      example:
-        type: credentials
-        credentials:
-          email: john.doe@example.com
-          passwordHash: a8ed0375fe4031438fb84e5f8
     SessionObject:
       type: object
       properties:
@@ -687,12 +713,6 @@ components:
         - token
         - createdAt
         - expiresAt
-      example:
-        userId: '154808587686619321'
-        planId: FREE2019
-        token: eyJhbGciOiJIUzUxMiIsInR5c
-        createdAt: '2019-01-23T12:08:42.951Z'
-        expiresAt: '2019-01-23T13:08:42.951Z'
     SubmissionBase:
       type: object
       properties:
