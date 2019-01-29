@@ -54,7 +54,7 @@ paths:
           type: string
         description: Identifier of the implicated execution
         required: true
-        example: 154878272714586010
+        example: '154878272714586010'
     get:
       tags:
         - Executions
@@ -157,6 +157,11 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SubmissionSearch'
+            examples:
+              simple:
+                $ref: '#/components/examples/SubmissionSearchSimple'
+              advanced:
+                $ref: '#/components/examples/SubmissionSearchAdvanced'
       responses:
         200:
           description: Submissions retrieved successfully
@@ -164,6 +169,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubmissionPage'
+              examples:
+                default:
+                  $ref: '#/components/examples/SubmissionSearchResults'
   /private/submissions/export:
     post:
       tags:
@@ -180,6 +188,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SubmissionExportRequest'
+            examples:
+              default:
+                $ref: '#/components/examples/SubmissionExportRequest'
       responses:
         200:
           description: Submissions exported successfully
@@ -189,6 +200,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SubmissionExportResponse'
+              examples:
+                default:
+                  $ref: '#/components/examples/SubmissionExportResponse'
             text/csv:
               schema:
                 type: array
@@ -202,6 +216,7 @@ paths:
           type: string
         description: Identifier of the implicated submission
         required: true
+        example: '154878962885858808'
     get:
       tags:
         - Submissions
@@ -215,6 +230,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubmissionObject'
+              examples:
+                default:
+                  $ref: '#/components/examples/SubmissionObject'
     delete:
       tags:
         - Submissions
@@ -228,6 +246,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubmissionObject'
+              examples:
+                default:
+                  $ref: '#/components/examples/SubmissionObject'
 components:
   examples:
     ExecutionObject:
@@ -375,7 +396,7 @@ components:
       value:
         pagination:
           hasBefore: false
-          hasNext: true
+          hasNext: false
         items:
           - id: '154878389526377252'
             flowId: '154878388287661012'
@@ -412,6 +433,150 @@ components:
         credentials:
           email: john.doe@example.com
           passwordHash: a8ed0375fe4031438fb84e5f8
+    SubmissionExportRequest:
+      summary: default
+      value:
+        formId: '154832175553844371'
+        format: CSV
+    SubmissionExportResponse:
+      summary: default
+      value:
+        - id: '154878858097026779'
+          formId: '154832175553844371'
+          workspaceId: '4504116097187840'
+          formData:
+            name: Janet Doe
+            email: janet.doe@example.com
+            message: I want more information
+            referer: user456
+          metaData:
+            navigator:
+              language: en-US
+              userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+            navigation:
+              location:
+                url: https://www.example.com/contact
+                host: www.example.com
+                path: /contact
+                protocol: 'https:'
+                parameters: '?referer=user456&utm_medium=email&utm_source=promo_email&utm_content=copy_variation1&utm_campaign=january_promo'
+              analytics:
+                ga:
+                  utm_term: null
+                  utm_medium: email
+                  utm_source: promo_email
+                  utm_content: copy_variation1
+                  utm_campaign: january_promo
+            view:
+              screen:
+                width: 1920
+                height: 1080
+              window:
+                width: 1860
+                height: 950
+          createdAt: '2019-01-29T19:03:00.970Z'
+    SubmissionObject:
+      summary: default
+      value:
+        id: '154878962885858808'
+        formId: '154878753193365963'
+        workspaceId: '4504116097187840'
+        formData:
+          name:
+            type: TEXT
+            value: John Doe
+          email:
+            type: EMAIL
+            value: john.doe@acme.com
+          message:
+            type: TEXT
+            value: Improve employees onboarding
+        metaData:
+          navigator:
+            language: en-US
+            userAgent: 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+          navigation:
+            location:
+              url: https://www.acme.com/feedback
+              host: www.acme.com
+              path: /feedback
+              protocol: 'https:'
+              parameters: '?lang=en'
+            analytics:
+              ga:
+                utm_term: null
+                utm_medium: null
+                utm_source: null
+                utm_content: null
+                utm_campaign: null
+          view:
+            screen:
+              width: 1024
+              height: 768
+            window:
+              width: 1024
+              height: 663
+        createdAt: '2019-01-29T19:20:28.858Z'
+    SubmissionSearchAdvanced:
+      summary: advanced
+      value:
+        formId: '154832175553844371'
+        pagination:
+          page: 1
+          size: 20
+    SubmissionSearchResults:
+      summary: default
+      value:
+        pagination:
+          hasBefore: false
+          hasNext: false
+        items:
+          - id: '154878858097026779'
+            formId: '154832175553844371'
+            workspaceId: '4504116097187840'
+            formData:
+              name:
+                type: TEXT
+                value: Janet Doe
+              email:
+                type: EMAIL
+                value: janet.doe@example.com
+              message:
+                type: TEXT
+                value: I want more information
+              referer:
+                type: HIDDEN
+                value: user456
+            metaData:
+              navigator:
+                language: en-US
+                userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+              navigation:
+                location:
+                  url: https://www.example.com/contact
+                  host: www.example.com
+                  path: /contact
+                  protocol: 'https:'
+                  parameters: '?referer=user456&utm_medium=email&utm_source=promo_email&utm_content=copy_variation1&utm_campaign=january_promo'
+                analytics:
+                  ga:
+                    utm_term: null
+                    utm_medium: email
+                    utm_source: promo_email
+                    utm_content: copy_variation1
+                    utm_campaign: january_promo
+              view:
+                screen:
+                  width: 1920
+                  height: 1080
+                window:
+                  width: 1860
+                  height: 950
+            createdAt: '2019-01-29T19:03:00.970Z'
+    SubmissionSearchSimple:
+      summary: simple
+      value:
+        formId: '154832175553844371'
   schemas:
     ActionError:
       allOf:
@@ -640,9 +805,6 @@ components:
           default: 20
           maximum: 50
           description: Number of items per page.
-      example:
-        page: 1
-        size: 20
     PageResponse:
       type: object
       description: Informational flags for page navigation
@@ -658,9 +820,6 @@ components:
       required:
         - hasBefore
         - hasNext
-      example:
-        hasBefore: false
-        hasNext: true
     SessionCreate:
       type: object
       properties:
@@ -734,11 +893,6 @@ components:
         - formId
         - workspaceId
         - createdAt
-      example:
-        id: '154832182736611967'
-        formId: '154832175553844371'
-        workspaceId: '4504116097187840'
-        createdAt: '2019-01-24T09:23:47.366Z'
     SubmissionExportRequest:
       type: object
       properties:
@@ -754,9 +908,6 @@ components:
           description: Format you want to export the data
       required:
         - formId
-      example:
-        formId: '154826972761382744'
-        format: CSV
     SubmissionExportResponse:
       allOf:
         - $ref: '#/components/schemas/SubmissionBase'
@@ -792,19 +943,6 @@ components:
           $ref: '#/components/schemas/SubmissionField'
         hidddenFieldIdN:
           $ref: '#/components/schemas/SubmissionField'
-      example:
-        name:
-          type: TEXT
-          value: John Doe
-        email:
-          type: EMAIL
-          value: john.doe@example.com
-        message:
-          type: TEXT
-          value: I want more information
-        referer:
-          type: HIDDEN
-          value: user123
     SubmissionFormValues:
       type: object
       description: This map contains as many properties as fields have the form. The fields are indexed by their field identifiers.
@@ -817,11 +955,6 @@ components:
           $ref: '#/components/schemas/SubmissionFieldValue'
         hiddenFieldIdN:
           $ref: '#/components/schemas/SubmissionFieldValue'
-      example:
-        name: John Doe
-        email: john.doe@example.com
-        message: I want more information
-        referer: user123
     SubmissionMetaData:
       type: object
       description: Contains data collected automatically when someone submits a form.
@@ -936,31 +1069,6 @@ components:
         - navigator
         - navigation
         - view
-      example:
-        navigator:
-          language: en-US
-          userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
-        navigation:
-          location:
-            url: https://www.example.com/contact
-            host: www.example.com
-            path: /contact
-            protocol: 'https:'
-            parameters: '?referer=user123&utm_medium=email&utm_source=promo_email&utm_content=copy_variation1&utm_campaign=january_promo'
-          analytics:
-            ga:
-              utm_term: null,
-              utm_medium: email
-              utm_source: promo_email
-              utm_content: copy_variation1
-              utm_campaign: january_promo
-        view:
-          screen:
-            width: 1920
-            height: 1080
-          window:
-            width: 1860
-            height: 950
     SubmissionObject:
       allOf:
         - $ref: '#/components/schemas/SubmissionBase'
@@ -1003,5 +1111,3 @@ components:
               description: Excludes non relevant submissions.
           required:
             - formId
-          example:
-            formId: '154826972761382744'
