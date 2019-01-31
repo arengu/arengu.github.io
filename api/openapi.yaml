@@ -11,12 +11,26 @@ servers:
   - url: https://api.arengu.com
     description: Production server
 tags:
-  - name: Executions
-    description: Check all the requests received by existing flows.
+  - name: Forms
+    description: Create new submissions following the defined structure of the form.
+  - name: Flows
+    description: Execute a series of tasks previously defined.
   - name: Sessions
     description: Create a temporal session using the credentials provided on registration.
   - name: Submissions
     description: Process the data received from a published form.
+  - name: Executions
+    description: Check all the requests received by existing flows.
+x-tagGroups:
+  - name: Public operations
+    tags:
+      - Forms
+      - Flows
+  - name: Authentication required
+    tags:
+      - Sessions
+      - Submissions
+      - Executions
 paths:
   /private/executions/search:
     post:
@@ -52,7 +66,7 @@ paths:
         in: path
         schema:
           type: string
-        description: Identifier of the implicated execution
+        description: Identifier of the implicated execution.
         required: true
         example: '154878272714586010'
     get:
@@ -249,6 +263,137 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/SubmissionObject'
+  /forms/{formId}/submissions/:
+    parameters:
+      - name: formId
+        in: path
+        schema:
+          type: string
+        description: Identifier of the form you want to submit
+        required: true
+        example: '154832175553844371'
+    post:
+      tags:
+        - Forms
+      summary: Submit a form
+      description: |
+        Submits the specified form triggering associated validation flows and events.
+
+        If the specified form has a validation flow and its execution is not successful,
+        operation will be aborted and server will return an error message previously
+        defined by user.
+
+        Any unexpected error caused by validation flow aborts the operation and
+        forces server to return a generic error message. Details of the specific
+        error are not visible to client for security reasons but available in
+        control panel.
+      operationId: createSubmission
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionFormValues'
+            examples:
+              default:
+                $ref: '#/components/examples/SubmissionCreate'
+      responses:
+        200:
+          description: Submission persisted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionCreateSuccess'
+              examples:
+                default:
+                  $ref: '#/components/examples/SubmissionCreateSuccess'
+        4XX:
+          description: Validation flow does not accept the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionCreateFailure'
+              examples:
+                default:
+                  $ref: '#/components/examples/SubmissionCreateFailure'
+        500:
+          description: Unexpected error processing the submission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/SubmissionCreateError'
+  /flows/{flowId}/executions/:
+    parameters:
+      - name: flowId
+        in: path
+        schema:
+          type: string
+        description: Identifier of the flow you want to execute
+        required: true
+        example: '154884383973679344'
+    post:
+      tags:
+        - Flows
+      summary: Execute a flow
+      description: |
+        Executes the specified flow passing the request headers and body as input.
+
+        The response and way of execution depends on flow definition:
+          - Asynchronous flows are not executed inmediately but queued to be executed
+          later in background. This web service returns a fixed status code and no body.
+          - Synchronous flows execute the actions in foreground and do not return
+          a response until it is completed. Both status code and body are calculated
+          based on the business rules of the flow.
+
+        In case the execution causes any kind of unexpected error, the web service
+        returns a generic server error.
+        Details of the specific error are not visible to client for security reasons
+        but available in control panel.
+      operationId: executeFlow
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Flow payload. No fixed structure.
+            examples:
+              default:
+                $ref: '#/components/examples/FlowExecute'
+      responses:
+        200:
+          description: Flow executed with no errors.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Flow payload. No fixed structure.
+              examples:
+                default:
+                  $ref: '#/components/examples/FlowExecuteSuccess'
+        202:
+          description: Flow queued to be executed later.
+        4XX:
+          description: Flow returned a non successful message.
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                default:
+                  $ref: '#/components/examples/FlowExecuteFailure'
+        500:
+          description: Unexpected error executing the flow.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/FlowExecuteError'
 components:
   examples:
     ExecutionObject:
@@ -357,7 +502,7 @@ components:
             actionId: forwardEvent
             actionAlias: Forward event
             code: ERR_ACTION_EXECUTION_ERROR
-            message: 'Server returned non success code: 404'
+            message: 'Server returned non successful code: 404'
           tracing:
             - id: forwardEvent
               alias: Forward event
@@ -379,7 +524,7 @@ components:
                 actionId: forwardEvent
                 actionAlias: Forward event
                 code: ERR_ACTION_EXECUTION_ERROR
-                message: 'Server returned non success code: 404'
+                message: 'Server returned non successful code: 404'
     ExecutionSearchAdvanced:
       summary: advanced
       value:
@@ -411,6 +556,29 @@ components:
       summary: simple
       value:
         flowId: '154878388287661012'
+    FlowExecute:
+      summary: default
+      value:
+        message: Hello world
+        from: ES
+        to: EN
+    FlowExecuteError:
+      summary: default
+      value:
+        code: ERR_FLOW_EXECUTION_ERROR
+        message: There was an error executing an action.
+    FlowExecuteFailure:
+      summary: default
+      value:
+        code: payment_required
+        message: Not enough balance to translate the sentence.
+    FlowExecuteSuccess:
+      summary: default
+      value:
+        translation: Hola mundo
+        words:
+          - hola
+          - mundo
     SessionCreate:
       summary: default
       value:
@@ -433,6 +601,35 @@ components:
         credentials:
           email: john.doe@example.com
           passwordHash: a8ed0375fe4031438fb84e5f8
+    SubmissionCreate:
+      summary: default
+      value:
+        name: Janet Doe
+        email: janet.doe@example.com
+        message: I want more information
+        referer: user456
+    SubmissionCreateError:
+      summary: default
+      value:
+        code: ERR_FLOW_EXECUTION_ERROR
+        message: Error executing validation flow
+    SubmissionCreateFailure:
+      summary: default
+      value:
+        message: Your account has been temporarily suspended.
+        response:
+          code: temporarily_suspended
+          reason: pending_documentation
+    SubmissionCreateSuccess:
+      summary: default
+      value:
+        id: '154893737310954041'
+        message: Your message has been processed!
+        target: https://example.com/tickets/463534
+        delay: 1000
+        response:
+          ticketId: 463534
+          priority: medium
     SubmissionExportRequest:
       summary: default
       value:
@@ -608,7 +805,6 @@ components:
       required:
         - code
         - message
-        - details
     ExecutionRequest:
       type: object
       description: Data sent by user on request
@@ -892,6 +1088,37 @@ components:
         - formId
         - workspaceId
         - createdAt
+    SubmissionCreateSuccess:
+      type: object
+      description: Response returned by server when submission is accepted.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the accepted submission.
+        message:
+          type: string
+          description: Confirmation message that will be displayed to user.
+        target:
+          type: string
+          description: URL of the website the user will be redirected to.
+        delay:
+          type: integer
+          description: Wait time until the user is redirected to the indicated URL.
+        response:
+          type: object
+          description: Additional information returned by the flow configured for onSubmit event.
+      required:
+        - id
+    SubmissionCreateFailure:
+      type: object
+      description: Response returned by server when submission is accepted.
+      properties:
+        message:
+          type: string
+          description: Error message built based on the response of the validation flow.
+        response:
+          type: object
+          description: Additional information returned by the validation flow.
     SubmissionExportRequest:
       type: object
       properties:
