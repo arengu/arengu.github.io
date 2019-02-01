@@ -83,6 +83,33 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/ExecutionSearchResults'
+        400:
+          description: Provided input is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/SchemaError'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        404:
+          description: Flow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
   /private/executions/{executionId}:
     parameters:
       - name: executionId
@@ -121,6 +148,24 @@ paths:
                   $ref: '#/components/examples/ExecutionObjectWithDebugCompleted'
                 debug/failure:
                   $ref: '#/components/examples/ExecutionObjectWithDebugFailed'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        404:
+          description: Execution not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
     delete:
       tags:
         - Executions
@@ -139,6 +184,24 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/ExecutionObject'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        404:
+          description: Execution not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
   /private/sessions/:
     post:
       tags:
@@ -165,6 +228,24 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/SessionObject'
+        400:
+          description: Provided input is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/SchemaError'
+        401:
+          description: User not found or wrong password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/WrongCredentials'
   /private/sessions/refresh:
     post:
       tags:
@@ -187,6 +268,24 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/SessionObject'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        403:
+          description: Current session cannot be refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/SessionRefreshBlock'
   /private/submissions/search:
     post:
       tags:
@@ -217,6 +316,33 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/SubmissionSearchResults'
+        400:
+          description: Provided input is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/SchemaError'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        404:
+          description: Form not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
   /private/submissions/export:
     post:
       tags:
@@ -255,6 +381,33 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SubmissionExportResponse'
+        400:
+          description: Provided input is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/SchemaError'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        404:
+          description: Form not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
   /private/submissions/{submissionId}:
     parameters:
       - name: submissionId
@@ -282,6 +435,24 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/SubmissionObject'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        404:
+          description: Submission not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
     delete:
       tags:
         - Submissions
@@ -300,6 +471,24 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/SubmissionObject'
+        401:
+          description: Operation requires an active session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/UnauthorizedOperation'
+        404:
+          description: Submission not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
   /forms/{formId}/submissions/:
     parameters:
       - name: formId
@@ -344,6 +533,24 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/SubmissionCreateSuccess'
+        400:
+          description: Provided input is not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/SchemaError'
+        404:
+          description: Form not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
         4XX:
           description: Validation flow does not accept the request.
           content:
@@ -402,7 +609,9 @@ paths:
                 $ref: '#/components/examples/FlowExecute'
       responses:
         200:
-          description: Flow executed with no errors.
+          description: Default response for synchronous executions.
+        2XX:
+          description: Custom successful response.
           content:
             application/json:
               schema:
@@ -414,7 +623,7 @@ paths:
         202:
           description: Flow queued to be executed later.
         4XX:
-          description: Flow returned a non successful message.
+          description: Custom error response.
           content:
             application/json:
               schema:
@@ -422,6 +631,15 @@ paths:
               examples:
                 default:
                   $ref: '#/components/examples/FlowExecuteFailure'
+        404:
+          description: Flow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppError'
+              examples:
+                default:
+                  $ref: '#/components/examples/EntityNotFoundError'
         500:
           description: Unexpected error executing the flow.
           content:
@@ -433,6 +651,13 @@ paths:
                   $ref: '#/components/examples/FlowExecuteError'
 components:
   examples:
+    EntityNotFoundError:
+      summary: default
+      value:
+        code: ERR_ENTITY_NOT_FOUND
+        message: Entity not found
+        details:
+          entityId: '404'
     ExecutionObject:
       summary: default
       value:
@@ -616,6 +841,19 @@ components:
         words:
           - hola
           - mundo
+    SchemaError:
+      summary: default
+      value:
+        code: ERR_INVALID_INPUT
+        message: The provided input does not satisfy the expected schema
+        details:
+          invalidProperties:
+            - code: ERR_REQUIRED_PROPERTY
+              path: /foo
+              message: is required
+            - code: ERR_UNDEFINED_PROPERTY
+              path: /bar
+              message: is undefined
     SessionCreate:
       summary: default
       value:
@@ -638,6 +876,11 @@ components:
         credentials:
           email: john.doe@example.com
           passwordHash: a8ed0375fe4031438fb84e5f8
+    SessionRefreshBlock:
+      summary: default
+      value:
+        code: ERR_INVALID_TOKEN
+        message: Refresh blocked due to a password update
     SubmissionCreate:
       summary: default
       value:
@@ -811,6 +1054,16 @@ components:
       summary: simple
       value:
         formId: '154832175553844371'
+    UnauthorizedOperation:
+      summary: default
+      value:
+        code: ERR_AUTHENTICATION_REQUIRED
+        message: The requested operation requires a valid session token
+    WrongCredentials:
+      summary: default
+      value:
+        code: ERR_WRONG_CREDENTIALS
+        message: The provided credentials do not match
   schemas:
     ActionError:
       allOf:
