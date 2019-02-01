@@ -1,10 +1,32 @@
 openapi: 3.0.0
 info:
   title: Arengu REST API
-  description: List of available operations in Arengu platform.
+  description: |
+    # Overview
+    This document contains all the existing web services that we offer to our
+    clients guaranteeing a minimum quality of service and backward compatibility.
+    In case you want to be aware of changes before deployments, send us an email
+    asking us to subscribe you to our changelog and we will notify you of any
+    change that can affect you.
+
+    The operations are grouped in two main groups of web services:
+      - Public operations: It contains all the available operations that allow
+        people to submit forms or execute flows. They do not require any kind
+        of authentication mechanism since they are public.
+      - Private operations: These web services require a valid an active session
+        to be invoked or our server will block the request. It is composed of
+        several operations that allow you to monitor and export processed data.
+
+    # Authentication
+
+    Currently, we only support one authentication mechanism based on JWT. We are
+    already working on API keys to facilitate the integration of external systems
+    with our application while keeping your data safe.
+
+    <security-definitions />
   termsOfService: https://www.arengu.com/terms-and-conditions.html
   contact:
-    name: Arengu Support
+    name: Support
     email: support@arengu.com
   version: '1.4'
 servers:
@@ -14,7 +36,6 @@ tags:
   - name: Forms
     description: Create new submissions following the defined structure of the form.
   - name: Flows
-    description: Execute a series of tasks previously defined.
   - name: Sessions
     description: Create a temporal session using the credentials provided on registration.
   - name: Submissions
@@ -26,7 +47,7 @@ x-tagGroups:
     tags:
       - Forms
       - Flows
-  - name: Authentication required
+  - name: Private operations
     tags:
       - Sessions
       - Submissions
@@ -39,6 +60,8 @@ paths:
       summary: Search executions
       description: Retrieves the latest processed requests sorted by descending processing date.
       operationId: searchExecutions
+      security:
+        - jsonwebtoken: []
       requestBody:
         required: true
         content:
@@ -75,6 +98,8 @@ paths:
       summary: Get a execution
       description: Retrieves the specified execution.
       operationId: getExecution
+      security:
+        - jsonwebtoken: []
       parameters:
         - name: debug
           in: query
@@ -102,6 +127,8 @@ paths:
       summary: Delete a execution
       description: Deletes the specified execution.
       operationId: deleteExecution
+      security:
+        - jsonwebtoken: []
       responses:
         200:
           description: Execution deleted successfully
@@ -148,6 +175,8 @@ paths:
           - Current session is not expired.
           - The related user did not change the password since the session was created.
       operationId: refreshSession
+      security:
+        - jsonwebtoken: []
       responses:
         200:
           description: Session created successfully
@@ -165,6 +194,8 @@ paths:
       summary: Search submissions
       description: Retrieves the latest received submissions sorted by descending processing date.
       operationId: searchSubmissions
+      security:
+        - jsonwebtoken: []
       requestBody:
         required: true
         content:
@@ -196,6 +227,8 @@ paths:
 
         The Content-Type header depends on the format you specify.
       operationId: exportSubmissions
+      security:
+        - jsonwebtoken: []
       requestBody:
         required: true
         content:
@@ -237,6 +270,8 @@ paths:
       summary: Get a submission
       description: Retrieves the specified submission.
       operationId: getSubmission
+      security:
+        - jsonwebtoken: []
       responses:
         200:
           description: Submissions retrieved successfully
@@ -253,6 +288,8 @@ paths:
       summary: Delete a submission
       description: Deletes the specified submission.
       operationId: deleteSubmission
+      security:
+        - jsonwebtoken: []
       responses:
         200:
           description: Submission deleted successfully
@@ -1333,3 +1370,20 @@ components:
           $ref: '#/components/schemas/PageRequest'
       required:
         - formId
+  securitySchemes:
+    jsonwebtoken:
+      type: http
+      scheme: bearer
+      description: |
+        [JWT](https://jwt.io/) can be generated calling to
+        [Create a session](#operation/createSession) operation. Their expiration date
+        is set, by default, to one hour. A valid token is enough to generate a new
+        one calling to [Refresh a session](#operation/refreshSession) operation.
+
+        Protected operations requires you to provide the JWT through Authentication
+        header using Bearer schema. If it is not set or it is expired, server will
+        reject the operation returning an error.
+
+        ```
+        Authentication: Bearer <JWT>
+        ```
