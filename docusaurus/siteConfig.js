@@ -3,8 +3,8 @@ const siteConfig = {
   tagline: 'User onboarding made simple',
   url: 'https://docs.arengu.com',
   baseUrl: '/',
-
   docsUrl: '',
+  cname: 'docs.arengu.com',
 
   // Used for publishing and more
   projectName: 'documentation',
