@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "redoc-cli serve ../api/openapi.yaml",
+    "build": "redoc-cli bundle ../api/openapi.yaml --cdn --output api.html --title \"API Reference - Arengu Docs\""
+  },
+  "dependencies": {
+    "redoc": "^2.0.0-rc.2",
+    "redoc-cli": "^0.7.0"
+  }
+}
