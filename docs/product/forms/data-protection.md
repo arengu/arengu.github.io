@@ -7,7 +7,7 @@ Both privacy and data protection are two of the highest priorities for us. We in
 
 ## Data persistance
 
-By default, all valid submissions sent by your users are stored into database for future consultation. In case you do not want us to store them because you receive sensitive information, you can flag the afected fields using the [Transient property](/docs/forms/fields/#transient-property) and they will not be stored into database.
+By default, all valid submissions sent by your users are stored into database for future consultation. In case you do not want us to store them because you receive sensitive information, you can flag the afected fields using the [Transient property](/product/forms/fields/#transient-property) and they will not be stored into database.
 
 This property is defined per field, so you can exclude the protected information (eg. passwords) while you continue storing the rest of the information for future processing (eg. user email or company name).
 

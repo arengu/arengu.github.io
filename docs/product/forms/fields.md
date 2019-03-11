@@ -83,7 +83,7 @@ Masked input to store passwords and secrets. Its value can be hashed using [Hash
 
 Advanced input for one-off charges or recurring subscriptions. Multiple providers are supported.
 
-**Configurable rules:** See [Payments](/docs/forms/payments) section for more info.
+**Configurable rules:** See [Payments](/product/forms/payments) section for more info.
 
 **Visual representation:** Custom component to process credit card information.
 

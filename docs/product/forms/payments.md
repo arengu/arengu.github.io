@@ -31,7 +31,7 @@ We only support one provider at this moment, but we are already working with add
 
 Every time a payment is collected using Stripe, it generates an invoice associated to a customer. Furthermore, every operation is logged, so you can keep a full record of all the done operations.
 
-**Supported charges:** [One-off](/docs/forms/payments#one-off-charge) and [Recurring](/docs/forms/payments#recurring-charge).
+**Supported charges:** [One-off](/product/forms/payments#one-off-charge) and [Recurring](/product/forms/payments#recurring-charge).
 
 **Certified as:** [PCI Level 1 Service Provider](http://www.visa.com/splisting/searchGrsp.do?companyNameCriteria=stripe,%20inc)
 

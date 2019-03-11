@@ -19,9 +19,9 @@ Arengu provides you a set of tools to build your user onboarding process without
 
 We offer you two different modules that work together to increase the onboarding experience of your potential clients on a completely transparent way.
 
-On the one hand, our [multi-step forms](/docs/forms/) let you design and implement user friendly forms compatible with modern web browsers without giving up security nor GDPR requirements.
+On the one hand, our [multi-step forms](/product/forms/) let you design and implement user friendly forms compatible with modern web browsers without giving up security nor GDPR requirements.
 
-On the other hand, our [advanced workflows](/docs/flows/) empower your forms adding complex validations against your web services, enriching your data with external sources or propagating your data to third providers.
+On the other hand, our [advanced workflows](/product/flows/) empower your forms adding complex validations against your web services, enriching your data with external sources or propagating your data to third providers.
 
 Furthermore, if you have to manage multiple projects or there are several people involved in them, the [built-in workspaces](/workspaces) system helps you to isolate their data in different contexts and control access per person.
 

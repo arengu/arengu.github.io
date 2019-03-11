@@ -22,6 +22,6 @@ Furthermore, we continue developing new features and improving the platform cont
 
 ## First steps
 
-First at all, analyze the [Types](/docs/flows/types) of flow we support and how you can invoke them configuring [Triggers](/docs/flows/triggers). As soon as you configure it, add some [Actions](/docs/flows/actions) to define your logic.
+First at all, analyze the [Types](/product/flows/types) of flow we support and how you can invoke them configuring [Triggers](/product/flows/triggers). As soon as you configure it, add some [Actions](/product/flows/actions) to define your logic.
 
-Your flow is ready, so enjoy and check occasionally the registered [Executions](/docs/flows/executions). If a flow fails, check the recorded [Errors](/docs/flows/errors) and analyze the execution using our [Debugging](/docs/flows/debugging) platform.
+Your flow is ready, so enjoy and check occasionally the registered [Executions](/product/flows/executions). If a flow fails, check the recorded [Errors](/product/flows/errors) and analyze the execution using our [Debugging](/product/flows/debugging) platform.

@@ -13,7 +13,7 @@ An execution is always associated to a status that indicates the state of that p
 
 * Pending: It has just been created but it has not been processed yet.
 * Running: Our runner is executing the actions that compose the flow.
-* Delayed: Execution is waiting to be processed because of a [Delay](/docs/flows/actions#delay) action.
+* Delayed: Execution is waiting to be processed because of a [Delay](/product/flows/actions#delay) action.
 * Completed: Execution has been completed with no errors.
 * Failed: An error has caused the execution to be aborted.
 
@@ -32,8 +32,8 @@ It contains the data that, from different sources, has been provided to the exec
 
 It contains the data that has been returned on its execution to the requester following a structure similar to a standard HTTP response. This property is empty when the execution could not be completed.
 
-* Status: Code that indicates the result of the execution. Synchronous flows returns a `200 OK` by default whereas asynchronous flows returns a `202 Accepted`. If the execution fails, a `500` code is set. Any other value between 200 and 499 can be set manually using the [Return response](/docs/flows/actions#return-respose) action.
-* Body: Payload defined by flow editor using [Return response](/docs/flows/actions#return-respose) action to express success/failure or return information to requester. If it is not set, an empty object is returned by default.
+* Status: Code that indicates the result of the execution. Synchronous flows returns a `200 OK` by default whereas asynchronous flows returns a `202 Accepted`. If the execution fails, a `500` code is set. Any other value between 200 and 499 can be set manually using the [Return response](/product/flows/actions#return-respose) action.
+* Body: Payload defined by flow editor using [Return response](/product/flows/actions#return-respose) action to express success/failure or return information to requester. If it is not set, an empty object is returned by default.
 
 > Headers object is not available on response yet, but it will be supported soon.
 
@@ -43,4 +43,4 @@ This property is set if, and only if, the execution was aborted due to a non rec
 
 The error object contains enough information to identify the action that caused the error and the problem that forced the execution to be aborted.
 
-Further information about the complete execution can be analyzed through the [Debugging](/docs/flows/debugging) feature.
+Further information about the complete execution can be analyzed through the [Debugging](/product/flows/debugging) feature.

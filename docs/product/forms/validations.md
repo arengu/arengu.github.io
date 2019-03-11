@@ -7,7 +7,7 @@ This section describes the two different kind of validations that we do every ti
 
 ## Form rules
 
-This first validation checks that the provided data satisfies the basic rules defined for each field of the current form (see [Fields](/docs/forms/fields/) section) and it is performed every time we have to send data to the backend.
+This first validation checks that the provided data satisfies the basic rules defined for each field of the current form (see [Fields](/product/forms/fields/) section) and it is performed every time we have to send data to the backend.
 
 As frontend validation does not guarantee its validity because requests can be manipulated, these rules are validated again on server side when request is received.
 
@@ -27,7 +27,7 @@ The procedure when one or more errors are detected is the same than on client si
 
 ## Validation flows
 
-As soon as you collect leads or process sign-ups using our forms, you have to execute validations against external systems to detect existing accounts, verify emails or check promotional codes. All those validations can be done using our powerful [Flows](/docs/flows/) module.
+As soon as you collect leads or process sign-ups using our forms, you have to execute validations against external systems to detect existing accounts, verify emails or check promotional codes. All those validations can be done using our powerful [Flows](/product/flows/) module.
 
 ### Securing business
 

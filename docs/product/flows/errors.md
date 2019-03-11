@@ -25,7 +25,7 @@ The detected error will be logged only as error of the affected action.
 
 Regardless of the action flags or the error type, any detected error is automatically attached to the logs of the affected execution for its later analysis.
 
-You can check this logs if you access to the details of any recent flow execution using the control panel. See [Debugging](/docs/flows/debugging) section for more information.
+You can check this logs if you access to the details of any recent flow execution using the control panel. See [Debugging](/product/flows/debugging) section for more information.
 
 ## Error types
 

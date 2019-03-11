@@ -15,7 +15,7 @@ The text of both _Back_ and _Next_ buttons is customizable per step, so you can 
 
 When someone completes a step and presses _Next_ button, the data of all the fields associated to that step is validated. Furthermore, if a validation flow is associated to that step, we send that information to the backend for its validation using the related flow.
 
-See [Validations](/docs/forms/validations/) section for more information about how we do it and the security involved on the process.
+See [Validations](/product/forms/validations/) section for more information about how we do it and the security involved on the process.
 
 ### Progressive checks
 

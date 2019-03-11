@@ -34,4 +34,4 @@ This is the most powerful way to export your data because it allows you to enric
 
 Furthermore that business logic runs on our infrastructure, so you do not have to implement nor deploy aything on your company servers or applications.
 
-See [Flows](/docs/flows/) section for more information about its execution or fault tolerance.
+See [Flows](/product/flows/) section for more information about its execution or fault tolerance.

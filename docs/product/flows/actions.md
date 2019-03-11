@@ -50,11 +50,11 @@ This action evaluates the specified conditions and continues the execution using
 
 #### Delay process
 
-It pauses the execution during a determined amount of time to resume it later in the same state. This action is not compatible with [Synchronous](/docs/flows/types#synchronous-flows) flows.
+It pauses the execution during a determined amount of time to resume it later in the same state. This action is not compatible with [Synchronous](/product/flows/types#synchronous-flows) flows.
 
 #### Return response
 
-It builds the response object based on the provided data and terminates the current execution. This action is not compatible with [Asynchronous](/docs/flows/types#asynchronous-flows) flows because they cannot return anything to requester.
+It builds the response object based on the provided data and terminates the current execution. This action is not compatible with [Asynchronous](/product/flows/types#asynchronous-flows) flows because they cannot return anything to requester.
 
 ### HTTP
 
