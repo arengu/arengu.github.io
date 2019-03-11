@@ -1,2 +1,5 @@
 # Ignore local history
-/.history/
+.history/
+
+# Ignore NodeJS dependencies
+node_modules/

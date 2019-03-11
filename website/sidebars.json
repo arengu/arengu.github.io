@@ -1,0 +1,26 @@
+{
+  "product": {
+    "Getting started": [
+      "product/index",
+      "product/workspaces",
+      "product/billing"
+    ],
+    "Forms": [
+      "product/forms/index",
+      "product/forms/fields",
+      "product/forms/data-protection",
+      "product/forms/multistep",
+      "product/forms/validations",
+      "product/forms/payments",
+      "product/forms/submissions"
+    ],
+    "Flows": [
+      "product/flows/index",
+      "product/flows/types",
+      "product/flows/triggers",
+      "product/flows/actions",
+      "product/flows/errors",
+      "product/flows/executions"
+    ]
+  }
+}
