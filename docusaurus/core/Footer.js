@@ -37,9 +37,8 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Sections</h5>
-            <a href="/product/">
-              Product documentation
-            </a>
+            <a href="/product/">Product documentation</a>
+            <a href="/api/">API specification</a>
           </div>
           <div>
             <h5>Community</h5>

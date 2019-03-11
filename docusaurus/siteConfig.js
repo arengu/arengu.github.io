@@ -12,6 +12,7 @@ const siteConfig = {
 
   headerLinks: [
     {doc: 'product/index', label: 'Product'},
+    {page: 'api/', label: 'API'},
   ],
 
   /* path to images for header/footer */
