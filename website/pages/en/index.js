@@ -2,7 +2,7 @@ const React = require('react');
 
 class Index extends React.Component {
   render() {
-    const {config: siteConfig, language = ''} = this.props;
+    const { config: siteConfig } = this.props;
 
     return (
       <div>
