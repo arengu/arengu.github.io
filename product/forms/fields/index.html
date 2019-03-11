@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Fields · Arengu Docs</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;p&gt;Our forms module supports a wide variety of fields with different validation rules and visual styles for any type of data you want to collect in your projects.&lt;/p&gt;
+"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Fields · Arengu Docs"/><meta property="og:type" content="website"/><meta property="og:url" content="https://docs.arengu.com/index.html"/><meta property="og:description" content="&lt;p&gt;Our forms module supports a wide variety of fields with different validation rules and visual styles for any type of data you want to collect in your projects.&lt;/p&gt;
+"/><meta property="og:image" content="https://docs.arengu.com/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://docs.arengu.com/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/docusaurus.svg" alt="Arengu Docs"/><h2 class="headerTitleWithLogo">Arengu Docs</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/product/" target="_self">Product</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><i></i></div><h2><i>›</i><span>Forms</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/product/">Overview</a></li><li class="navListItem"><a class="navItem" href="/product/workspaces">Workspaces</a></li><li class="navListItem"><a class="navItem" href="/product/billing">Billing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Forms</h3><ul class=""><li class="navListItem"><a class="navItem" href="/product/forms/">Introduction</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/product/forms/fields">Fields</a></li><li class="navListItem"><a class="navItem" href="/product/forms/data-protection">Data protection</a></li><li class="navListItem"><a class="navItem" href="/product/forms/multistep">Multi-step</a></li><li class="navListItem"><a class="navItem" href="/product/forms/validations">Validations</a></li><li class="navListItem"><a class="navItem" href="/product/forms/payments">Payments</a></li><li class="navListItem"><a class="navItem" href="/product/forms/submissions">Submissions</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Flows</h3><ul class=""><li class="navListItem"><a class="navItem" href="/product/flows/">Introduction</a></li><li class="navListItem"><a class="navItem" href="/product/flows/types">Types</a></li><li class="navListItem"><a class="navItem" href="/product/flows/triggers">Triggers</a></li><li class="navListItem"><a class="navItem" href="/product/flows/actions">Actions</a></li><li class="navListItem"><a class="navItem" href="/product/flows/errors">Errors</a></li><li class="navListItem"><a class="navItem" href="/product/flows/executions">Executions</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              const headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                if (event.target.tagName === 'A') {
+                  document.body.classList.remove('tocActive');
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle">Fields</h1></header><article><div><span><p>Our forms module supports a wide variety of fields with different validation rules and visual styles for any type of data you want to collect in your projects.</p>
+<h2><a class="anchor" aria-hidden="true" id="types"></a><a href="#types" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Types</h2>
+<p>This section explains all the different fields we support. Its visual representation varies in function of the type from native browser components to custom ones with a UX better than their original equivalents.</p>
+<h3><a class="anchor" aria-hidden="true" id="choice-field"></a><a href="#choice-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Choice field</h3>
+<p>Group of different options where user chooses one or more possibilities. Multiple choice is disabled unless you check <a href="#multiple-values">Multiple values</a> option.</p>
+<p><strong>Configurable rules:</strong> <a href="#date-format">Date format</a> and <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Group of either radio buttons (single value) or checkboxes (multiples). Both cases use custom components to support styling.</p>
+<p><strong>API requirement:</strong> String for single value fields or an array of strings when multiple values are allowed.</p>
+<h3><a class="anchor" aria-hidden="true" id="date-time-field"></a><a href="#date-time-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Date/Time field</h3>
+<p>Input where users can set a date (eg. <em>Jan 1st 1990</em>) or a time (eg. <em>13:37</em>) depending on the chosen fomat.</p>
+<p><strong>Configurable rules:</strong> <a href="#date-time-format">Date/Time format</a> and <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Native browser input for date or time fields.</p>
+<p><strong>API requirement:</strong> String with format <code>yyyy-MM-dd</code> (date) or <code>HH:mm</code> (time).</p>
+<h3><a class="anchor" aria-hidden="true" id="dropdown-field"></a><a href="#dropdown-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Dropdown field</h3>
+<p>Dropdown with several options where users can set one or more values depending on <a href="#multiple-values">Multiple values</a> option.</p>
+<p><strong>Configurable rules:</strong> <a href="#multiple-values">Multiple values</a>, <a href="#valid-values">Valid values</a> and <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Custom component that supports multiple selection and partial search.</p>
+<p><strong>API requirement:</strong> String for single value fields or an array of strings for multiple values.</p>
+<h3><a class="anchor" aria-hidden="true" id="email-field"></a><a href="#email-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Email field</h3>
+<p>Input that expects a well-formed email. If you want to check it exists or exclude disposable emails, you have to use a validation flow for it.</p>
+<p><strong>Configurable rules:</strong> <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Standard browser input for an email field.</p>
+<p><strong>API requirement:</strong> String matching the standard email pattern.</p>
+<h3><a class="anchor" aria-hidden="true" id="legal-field"></a><a href="#legal-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Legal field</h3>
+<p>Checkbox followed by a statement that confirms user read and accepted something.</p>
+<p><strong>Configurable rules:</strong> None.</p>
+<p><strong>Visual representation:</strong> Custom  browser input for an email field.</p>
+<p><strong>API requirement:</strong> String matching the standard email pattern.</p>
+<h3><a class="anchor" aria-hidden="true" id="number-field"></a><a href="#number-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Number field</h3>
+<p>Input that expects a number. Accepted values depends on <a href="#numeric-format">Numeric format</a> property.</p>
+<p><strong>Configurable rules:</strong> <a href="#numeric-format">Numeric format</a>, <a href="#minimum-value">Minimum value</a>, <a href="#maximum-value">Maximum value</a> and <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Standard browser input for a number field.</p>
+<p><strong>API requirement:</strong> String matching the defined numeric format.</p>
+<h3><a class="anchor" aria-hidden="true" id="password-field"></a><a href="#password-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Password field</h3>
+<p>Masked input to store passwords and secrets. Its value can be hashed using <a href="#hash-function">Hash function</a> rule.</p>
+<p><strong>Configurable rules:</strong> <a href="#hash-function">Hash function</a>.</p>
+<p><strong>Visual representation:</strong> Standard browser input for a password field.</p>
+<p><strong>API requirement:</strong> String. Hashing must be applied by client.</p>
+<h3><a class="anchor" aria-hidden="true" id="payment-field"></a><a href="#payment-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Payment field</h3>
+<p>Advanced input for one-off charges or recurring subscriptions. Multiple providers are supported.</p>
+<p><strong>Configurable rules:</strong> See <a href="/product/forms/payments">Payments</a> section for more info.</p>
+<p><strong>Visual representation:</strong> Custom component to process credit card information.</p>
+<p><strong>API requirement:</strong> Card token generated by the chosen payment provider.</p>
+<h3><a class="anchor" aria-hidden="true" id="phone-field"></a><a href="#phone-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Phone field</h3>
+<p>Input that expects a phone. Accepted phones depends on field configuration.</p>
+<p><strong>Configurable rules:</strong> <a href="#minimum-length">Minimum length</a>, <a href="#maximum-length">Maximum length</a> and <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Standard browser input for a tel field.</p>
+<p><strong>API requirement:</strong> String matching E.164 numbering plan.</p>
+<h3><a class="anchor" aria-hidden="true" id="text-field"></a><a href="#text-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Text field</h3>
+<p>Standard input that admits any value.</p>
+<p><strong>Configurable rules:</strong> <a href="#minimum-length">Minimum length</a>, <a href="#maximum-length">Maximum length</a> and <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Standard browser input for a text field.</p>
+<p><strong>API requirement:</strong> String.</p>
+<h3><a class="anchor" aria-hidden="true" id="url-field"></a><a href="#url-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>URL field</h3>
+<p>Input that expects a well-formed URL. If you have to check existance of the provided url, use a validation flow.</p>
+<p><strong>Configurable rules:</strong> <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Standard browser input</p>
+<p><strong>API requirement:</strong> String containing a valid URL.</p>
+<h3><a class="anchor" aria-hidden="true" id="yes-no-field"></a><a href="#yes-no-field" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Yes/No field</h3>
+<p>Most basic field for yes/no statements. As it only supports two different values, default value is mandatory.</p>
+<p><strong>Configurable rules:</strong> <a href="#default-value">Default value</a>.</p>
+<p><strong>Visual representation:</strong> Custom component that displays a switch with two different positions: <em>Yes</em> or <em>No</em>.</p>
+<p><strong>API requirement:</strong> Boolean value. Strings (<code>yes</code>/<code>no</code>) or integers (<code>1</code>/<code>0</code>) are not valid.</p>
+<h2><a class="anchor" aria-hidden="true" id="rules"></a><a href="#rules" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rules</h2>
+<p>Depending on the type of field you choose, you have a different set of rules to configure. Furthermore, if you have to add an advanced validation, you can create a validation flow and link it to your form.</p>
+<p>To make sure malicious users do not introduce invalid data, unlike other competitors, all our data validations are performed on both server and client side.</p>
+<h3><a class="anchor" aria-hidden="true" id="date-time-format"></a><a href="#date-time-format" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Date/Time format</h3>
+<p>Form does not accept any date that does not satisfy the chosen format. If you have to ask for a full date (including hour), use two different fields with date and time format respectively.</p>
+<p><strong>Useful for:</strong> asking user her birthdate or a slot for a demo.</p>
+<p><strong>Available for:</strong> <a href="#date-field">Date</a> field.</p>
+<h3><a class="anchor" aria-hidden="true" id="default-value"></a><a href="#default-value" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Default value</h3>
+<p>Sets a value that will be assigned to that field when user does not specifies a value. This default value is assigned by backend, so it works even if you use a standard HTML form or the API.</p>
+<p>The specified value must satisfy any additional requirement or server will return an error. For example, if you set a minimum length, the default value cannot be shorter than the specified length.</p>
+<p><strong>Useful for:</strong> setting a default department on contact request or assigning a standard priority on issue report.</p>
+<p><strong>Available for:</strong> <a href="#yes-no-field">Yes/No</a>, <a href="#choice-field">Choice</a>, <a href="#date-time-field">Date/Time</a>, <a href="#dropdown-field">Dropdown</a>, <a href="#email-field">Email</a>, <a href="#number-field">Number</a>, <a href="#phone-field">Phone</a>, <a href="#text-field">Text</a> and <a href="#url-field">URL</a> fields.</p>
+<h3><a class="anchor" aria-hidden="true" id="maximum-length"></a><a href="#maximum-length" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Maximum length</h3>
+<p>Every value specified by an user must be equal or shorter than the length you specified for that field.</p>
+<blockquote>
+<p>This rule does not omit whitespaces when validation is performed.</p>
+</blockquote>
+<p><strong>Useful for:</strong> validating length of promotional codes.</p>
+<p><strong>Available for:</strong> <a href="#number-field">Number</a> field.</p>
+<h3><a class="anchor" aria-hidden="true" id="maximum-value"></a><a href="#maximum-value" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Maximum value</h3>
+<p>Forbides values greater than the specified value.</p>
+<p><strong>Useful for:</strong> establishing a maximum number of items that someone can order using your forms.</p>
+<p><strong>Available for:</strong> <a href="#number-field">Number</a> field.</p>
+<h3><a class="anchor" aria-hidden="true" id="minimum-length"></a><a href="#minimum-length" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Minimum length</h3>
+<p>Every value specified by an user must be equal or longer than the length you specified for that field.</p>
+<blockquote>
+<p>This rule does not omit whitespaces when validation is performed.</p>
+</blockquote>
+<blockquote>
+<p>This rule does not replace Required field property, so do not forget to configure it when needed.</p>
+</blockquote>
+<p><strong>Useful for:</strong> validating length of promotional codes.</p>
+<p><strong>Available for:</strong> <a href="#number-field">Number</a> field.</p>
+<h3><a class="anchor" aria-hidden="true" id="minimum-value"></a><a href="#minimum-value" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Minimum value</h3>
+<p>Requires user to specify a number equal or greater than the specified one.</p>
+<p><strong>Useful for:</strong> requiring a minimum fee that someone has to pay.</p>
+<p><strong>Available for:</strong> <a href="#number-field">Number</a> field.</p>
+<h3><a class="anchor" aria-hidden="true" id="multiple-values"></a><a href="#multiple-values" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Multiple values</h3>
+<p>This flag does not require but allows users to provide more than one value for a field.</p>
+<blockquote>
+<p>If you have to require a specific number of options, combine it with Minimum options and/or Maximum options properties.</p>
+</blockquote>
+<p><strong>Useful for:</strong> collecting areas of interest on user sign-up or setting affected services on issue report.</p>
+<p><strong>Available for:</strong> <a href="#choice-field">Choice</a> and <a href="#dropdown-field">Dropdown</a> fields.</p>
+<h3><a class="anchor" aria-hidden="true" id="numeric-format"></a><a href="#numeric-format" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Numeric format</h3>
+<p>Form does not accept any value that does not satisfy the specified numeric format. Formats that support decimal numbers do not require users to specify them when integers are provided.</p>
+<blockquote>
+<p>Currency format allows negative numbers, so stablish a Minimum value when needed.</p>
+</blockquote>
+<p><strong>Useful for:</strong> requiring integer amounts on product pre-sale.</p>
+<p><strong>Available for:</strong> <a href="#number-field">Number</a> field.</p>
+<h3><a class="anchor" aria-hidden="true" id="valid-values"></a><a href="#valid-values" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Valid values</h3>
+<p>Specifies the possible options that an user can specify for a field. This rule can be combined with <a href="#additional-values">Additional values</a> property when you have to allow people to specify custom values.</p>
+<p><strong>Useful for:</strong> setting the company departments or specifying the available sizes of a t-shirt.</p>
+<p><strong>Available for:</strong> <a href="#choice-field">Choice</a> and <a href="#dropdown-field">Dropdown</a> fields.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/product/forms/index"><span class="arrow-prev">← </span><span>Introduction</span></a><a class="docs-next button" href="/product/forms/data-protection"><span>Data protection</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#types">Types</a><ul class="toc-headings"><li><a href="#choice-field">Choice field</a></li><li><a href="#date-time-field">Date/Time field</a></li><li><a href="#dropdown-field">Dropdown field</a></li><li><a href="#email-field">Email field</a></li><li><a href="#legal-field">Legal field</a></li><li><a href="#number-field">Number field</a></li><li><a href="#password-field">Password field</a></li><li><a href="#payment-field">Payment field</a></li><li><a href="#phone-field">Phone field</a></li><li><a href="#text-field">Text field</a></li><li><a href="#url-field">URL field</a></li><li><a href="#yes-no-field">Yes/No field</a></li></ul></li><li><a href="#rules">Rules</a><ul class="toc-headings"><li><a href="#date-time-format">Date/Time format</a></li><li><a href="#default-value">Default value</a></li><li><a href="#maximum-length">Maximum length</a></li><li><a href="#maximum-value">Maximum value</a></li><li><a href="#minimum-length">Minimum length</a></li><li><a href="#minimum-value">Minimum value</a></li><li><a href="#multiple-values">Multiple values</a></li><li><a href="#numeric-format">Numeric format</a></li><li><a href="#valid-values">Valid values</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/docusaurus.svg" alt="Arengu Docs" width="66" height="58"/></a><div><h5>Sections</h5><a href="/product/">Product documentation</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/" target="_blank" rel="noreferrer noopener">Stack Overflow</a><a href="https://discordapp.com/">Project Chat</a><a href="https://twitter.com/" target="_blank" rel="noreferrer noopener">Twitter</a></div><div><h5>More</h5><a href="https://github.com/arengu/">GitHub</a><a href="https://www.linkedin.com/company/arengu/">LinkedIn</a></div></section><a href="https://code.facebook.com/projects/" target="_blank" rel="noreferrer noopener" class="fbOpenSource"><img src="/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/></a><section class="copyright">Copyright © 2019 Arengu Software</section></footer></div></body></html>
