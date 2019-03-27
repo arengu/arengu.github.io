@@ -66,9 +66,6 @@ const siteConfig = {
 
   // Show documentation's last update time.
   // enableUpdateTime: true,
-
-  // Boolean flag to indicate whether html files in /pages should be wrapped with Docusaurus site styles, header and footer.
-  wrapPagesHTML: true,
 };
 
 module.exports = siteConfig;
