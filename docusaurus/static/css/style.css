@@ -214,3 +214,7 @@ a {
     top: 98px;
   }
 }
+
+.headerTitleWithLogo {
+  display: none !important;
+}
