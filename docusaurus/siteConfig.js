@@ -1,5 +1,5 @@
 const siteConfig = {
-  title: 'docs',
+  title: 'Arengu Docs',
   tagline: 'User onboarding made simple',
   url: 'https://docs.arengu.com',
   baseUrl: '/',
