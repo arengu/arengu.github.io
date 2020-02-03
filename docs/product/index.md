@@ -13,7 +13,7 @@ We are sure you already browsed [our website](https://www.arengu.com/) several t
 
 ### What we do
 
-Arengu provides you a set of tools to build your user onboarding process without development overhead, security risks nor maintenace. You can focus on lead conversion while we do the hard work.
+Arengu provides you a set of tools to build your user onboarding process without development overhead, security risks nor maintenance. You can focus on lead conversion while we do the hard work.
 
 ### How we do
 
