@@ -5,6 +5,6 @@
   },
   "dependencies": {
     "redoc": "^2.0.0-rc.22",
-    "redoc-cli": "^0.7.0"
+    "redoc-cli": "^0.9.5"
   }
 }
