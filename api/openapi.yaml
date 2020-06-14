@@ -1630,7 +1630,7 @@ components:
       description: |
         [JWT](https://jwt.io/) can be generated calling to
         [Create a session](#operation/createSession) operation. Their expiration date
-        is set, by default, to one hour. A valid token is enough to generate a new
+        is set, by default, to 24 hours. A valid token is enough to generate a new
         one calling to [Refresh a session](#operation/refreshSession) operation.
 
         Protected operations requires you to provide the JWT through Authentication
