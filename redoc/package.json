@@ -4,7 +4,7 @@
     "build": "redoc-cli bundle ../api/openapi.yaml --cdn --output api.html --title \"API Reference - Arengu Docs\""
   },
   "dependencies": {
-    "redoc": "^2.0.0-rc.22",
-    "redoc-cli": "^0.9.5"
+    "redoc": "^2.0.0-rc.30",
+    "redoc-cli": "^0.9.8"
   }
 }
