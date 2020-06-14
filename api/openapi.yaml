@@ -28,7 +28,7 @@ info:
   contact:
     name: Support
     email: support@arengu.com
-  version: '1.4'
+  version: '2.x'
 servers:
   - url: https://api.arengu.com
     description: Production server
