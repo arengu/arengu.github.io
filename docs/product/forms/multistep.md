@@ -3,7 +3,7 @@ id: multistep
 title: Multi-step
 ---
 
-Our forms support multiple steps to reduce user friction filling up the form progressively instead of requiring her to fill in tens of fieds without any feedback.
+Our forms support multiple steps to reduce user friction filling up the form progressively, instead of requiring users to fill in tens of fields without any feedback.
 
 ## Form navigation
 
@@ -13,18 +13,18 @@ The text of both _Back_ and _Next_ buttons is customizable per step, so you can 
 
 ## Input validation
 
-When someone completes a step and presses _Next_ button, the data of all the fields associated to that step is validated. Furthermore, if a validation flow is associated to that step, we send that information to the backend for its validation using the related flow.
+When someone completes a step and presses the _Next_ button, the data of all the fields associated to that step is validated. Furthermore, if a validation flow is associated with that step, that information will be sent to the backend for its validation, by using the relevant flow.
 
-See [Validations](/product/forms/validations/) section for more information about how we do it and the security involved on the process.
+See [Validations](/product/forms/validations/) section for more information about how this is done and the security involved in the process.
 
 ### Progressive checks
 
-If your flow needs data that belongs to different steps, you do not have to ask user that information twice. Every time we execute a flow, we provide the information of the previous steps and the current ones.
+If your flow needs data that belongs to different steps, you do not have to ask the user for that information twice. Every time a flow is executed, the information from previous steps as well as the current ones is provided.
 
-This kind of behaviour is essential for two-factor verifications where you ask the phone number and, in the next step, the security code that she has received in his mobile phone.
+This kind of behaviour is essential for two-factor verifications – first, the user is asked for their phone number, and then the security code is in their mobile phone.
 
 ## Data persistence
 
-Despite we send the form data to flows for data validation, we do not store that information into the submissions database until the whole form is filled in and the _Submit_ button is pressed.
+Despite sending the form data to the flow for data validation, we do not store that information into the submissions database until the whole form is filled in and the _Submit_ button is pressed and the associated validation flows are passed.
 
-If you persist that information or provide it to third-party systems during validation, notifying the user about it is your completely responsibility.
+If you persist that information or provide it to third-party systems during validation, notifying the user about it is your complete responsibility.

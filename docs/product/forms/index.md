@@ -7,7 +7,7 @@ Our forms module allows you to capture leads without spending any minute develop
 
 ## Features
 
-A form may look something very simple, but we support tens of features out-of-the-box that will save you several weeks of development and maintenance:
+A form may look like something simple, but Arengu supports tens of out-of-the-box features that will save you several weeks of development and maintenance:
 
 * Multi-step forms.
 * Improved form inputs.
@@ -23,8 +23,8 @@ Furthermore, as soon as you connect the form to our [Flows](/product/flows/) mod
 
 ## First steps
 
-You should start taking a look at our [Fields](/product/forms/fields) section to discover all the different types of data that we handle. Once you know the fields you need, explore the [Multi-step](/product/forms/multistep) section to learn how you can structure your form.
+Take a look at our [Fields](/product/forms/fields) section to discover all the different types of data that may be handled. Once you know the fields you need, explore the [Multi-step](/product/forms/multistep) section to learn how you can structure your form.
 
-If you have to collect [Payments](/product/forms/payments), read carefully what providers we support. Probably you will want to check our  [Validations](/product/forms/validations) strategy or even how to add your own checks using our [Flows](/product/flows/) module.
+If you have to collect [Payments](/product/forms/payments), read carefully what providers we support. Probably you will want to check our [Validations](/product/forms/validations) strategy or even know how to add your own checks using our [Flows](/product/flows/) module.
 
-Now you are a master, so relax and check the [Submissions](/product/forms/submissions) page while we process your leads.
+Now that you are a master, relax and check th [Submissions](/product/forms/submissions) page while we process your leads.

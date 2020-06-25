@@ -11,17 +11,17 @@ This section explains all the different fields we support. Its visual representa
 
 ### Choice field
 
-Group of different options where user chooses one or more possibilities. Multiple choice is disabled unless you check [Multiple values](#multiple-values) option.
+Group of different options where the user chooses one or more possibilities. Multiple choice is disabled unless you check [Multiple values](#multiple-values) option.
 
 **Configurable rules:** [Date format](#date-format) and [Default value](#default-value).
 
-**Visual representation:** Group of either radio buttons (single value) or checkboxes (multiples). Both cases use custom components to support styling.
+**Visual representation:** Group of either radio buttons (single value) or checkboxes (multiple). Both cases use custom components to support styling.
 
 **API requirement:** String for single value fields or an array of strings when multiple values are allowed.
 
 ### Date/Time field
 
-Input where users can set a date (eg. _Jan 1st 1990_) or a time (eg. _13:37_) depending on the chosen fomat.
+Input where users can set a date (eg. _Jan 1st 1990_) or a time (eg. _13:37_) depending on the chosen format.
 
 **Configurable rules:** [Date/Time format](#date-time-format) and [Default value](#default-value).
 
@@ -51,13 +51,13 @@ Input that expects a well-formed email. If you want to check it exists or exclud
 
 ### Legal field
 
-Checkbox followed by a statement that confirms user read and accepted something.
+Checkbox followed by a statement that confirms the user read and accepted something.
 
 **Configurable rules:** None.
 
-**Visual representation:** Custom  browser input for an email field.
+**Visual representation:** Custom browser input for an email field.
 
-**API requirement:** String matching the standard email pattern.
+**API requirement:** String matching the boolean value `true`/`false`.
 
 ### Number field
 
@@ -77,7 +77,7 @@ Masked input to store passwords and secrets. Its value can be hashed using [Hash
 
 **Visual representation:** Standard browser input for a password field.
 
-**API requirement:** String. Hashing must be applied by client.
+**API requirement:** String. Hashing must be applied by client when SDK is not used.
 
 ### Payment field
 
@@ -91,7 +91,7 @@ Advanced input for one-off charges or recurring subscriptions. Multiple provider
 
 ### Phone field
 
-Input that expects a phone. Accepted phones depends on field configuration.
+Input that expects a phone. Accepted phones depend on field configuration.
 
 **Configurable rules:** [Minimum length](#minimum-length), [Maximum length](#maximum-length) and [Default value](#default-value).
 
@@ -111,7 +111,7 @@ Standard input that admits any value.
 
 ### URL field
 
-Input that expects a well-formed URL. If you have to check existance of the provided url, use a validation flow.
+Input that expects a well-formed URL. If you have to check the existence of the provided URL, use a validation flow.
 
 **Configurable rules:** [Default value](#default-value).
 
@@ -127,7 +127,7 @@ Most basic field for yes/no statements. As it only supports two different values
 
 **Visual representation:** Custom component that displays a switch with two different positions: _Yes_ or _No_.
 
-**API requirement:** Boolean value. Strings (`yes`/`no`) or integers (`1`/`0`) are not valid.
+**API requirement:** String matching the boolean value `true`/`false`.
 
 ## Rules
 
@@ -139,17 +139,17 @@ To make sure malicious users do not introduce invalid data, unlike other competi
 
 Form does not accept any date that does not satisfy the chosen format. If you have to ask for a full date (including hour), use two different fields with date and time format respectively.
 
-**Useful for:** asking user her birthdate or a slot for a demo.
+**Useful for:** Asking the user her birthdate or a slot for a demo.
 
 **Available for:** [Date](#date-field) field.
 
 ### Default value
 
-Sets a value that will be assigned to that field when user does not specifies a value. This default value is assigned by backend, so it works even if you use a standard HTML form or the API.
+Sets a value that will be assigned to that field when the user does not specify a value. This default value is assigned by backend, so it works even if you use a standard HTML form or the API.
 
 The specified value must satisfy any additional requirement or server will return an error. For example, if you set a minimum length, the default value cannot be shorter than the specified length.
 
-**Useful for:** setting a default department on contact request or assigning a standard priority on issue report.
+**Useful for:** Setting a default department on contact request or assigning a standard priority on issue report.
 
 **Available for:** [Yes/No](#yes-no-field), [Choice](#choice-field), [Date/Time](#date-time-field), [Dropdown](#dropdown-field), [Email](#email-field), [Number](#number-field), [Phone](#phone-field), [Text](#text-field) and [URL](#url-field) fields.
 
@@ -159,7 +159,7 @@ Every value specified by an user must be equal or shorter than the length you sp
 
 > This rule does not omit whitespaces when validation is performed.
 
-**Useful for:** validating length of promotional codes.
+**Useful for:** Validating length of promotional codes.
 
 **Available for:** [Number](#number-field) field.
 
@@ -167,7 +167,7 @@ Every value specified by an user must be equal or shorter than the length you sp
 
 Forbides values greater than the specified value.
 
-**Useful for:** establishing a maximum number of items that someone can order using your forms.
+**Useful for:** Establishing a maximum number of items that someone can order using your forms.
 
 **Available for:** [Number](#number-field) field.
 
@@ -179,25 +179,25 @@ Every value specified by an user must be equal or longer than the length you spe
 
 > This rule does not replace Required field property, so do not forget to configure it when needed.
 
-**Useful for:** validating length of promotional codes.
+**Useful for:** Validating length of promotional codes.
 
 **Available for:** [Number](#number-field) field.
 
 ### Minimum value
 
-Requires user to specify a number equal or greater than the specified one.
+Requires users to specify a number equal or greater than the specified one.
 
-**Useful for:** requiring a minimum fee that someone has to pay.
+**Useful for:** Requiring a minimum fee that someone has to pay.
 
 **Available for:** [Number](#number-field) field.
 
 ### Multiple values
 
-This flag does not require but allows users to provide more than one value for a field.
+This flag is not required, but allows users to provide more than one value for a field.
 
 > If you have to require a specific number of options, combine it with Minimum options and/or Maximum options properties.
 
-**Useful for:** collecting areas of interest on user sign-up or setting affected services on issue report.
+**Useful for:** Collecting areas of interest on user sign-up or setting affected services on issue report.
 
 **Available for:** [Choice](#choice-field) and [Dropdown](#dropdown-field) fields.
 
@@ -205,16 +205,16 @@ This flag does not require but allows users to provide more than one value for a
 
 Form does not accept any value that does not satisfy the specified numeric format. Formats that support decimal numbers do not require users to specify them when integers are provided.
 
-> Currency format allows negative numbers, so stablish a Minimum value when needed.
+> Currency format allows negative numbers, so establish a [Minimum value](#minimum-value) when needed.
 
-**Useful for:** requiring integer amounts on product pre-sale.
+**Useful for:** Requiring integer amounts on pre-sale product.
 
 **Available for:** [Number](#number-field) field.
 
 ### Valid values
 
-Specifies the possible options that an user can specify for a field. This rule can be combined with [Additional values](#additional-values) property when you have to allow people to specify custom values.
+Specifies the possible options that a user can set for a field. This rule can be combined with the [Additional values](#additional-values) property when you have to allow people to set custom values.
 
-**Useful for:** setting the company departments or specifying the available sizes of a t-shirt.
+**Useful for:** Setting the company departments or specifying the available sizes of a t-shirt.
 
 **Available for:** [Choice](#choice-field) and [Dropdown](#dropdown-field) fields.

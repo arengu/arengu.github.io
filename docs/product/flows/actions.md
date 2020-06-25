@@ -30,7 +30,7 @@ This action returns information of the provided company based on the domain of i
 
 #### Find person
 
-It returns information of the employee and the company asociated to the provided email address. This action does not work with personal emails. It includes the same information than [Find company](#find-company) action plus useful data related to the employee like role, location or her time zone.
+It returns information of the employee and the company associated with the provided email address. This action does not work with personal emails. It includes the same information as [Find company](#find-company) action plus useful data related to the employee like role, location or her time zone.
 
 ### Email
 
@@ -38,7 +38,7 @@ This family groups a set of actions related to email addresses that are powered 
 
 #### Verify email
 
-It performs several checks against the provided email address in function of the rules that you have selected. The available rules are, for example, exclusion of disposable emails or addresses associated to free providers.
+It performs several checks against the provided email address in function of the rules that you have selected. The available rules are, for example, exclusion of disposable emails or addresses associated with free providers.
 
 ### Flow
 
@@ -54,7 +54,7 @@ It pauses the execution during a determined amount of time to resume it later in
 
 #### Return response
 
-It builds the response object based on the provided data and terminates the current execution. This action is not compatible with [Asynchronous](/product/flows/types#asynchronous-flows) flows because they cannot return anything to requester.
+It builds the response object based on the provided data and terminates the current execution. This action is not compatible with [Asynchronous](/product/flows/types#asynchronous-flows) flows because they cannot return anything to the requester.
 
 ### HTTP
 
@@ -66,11 +66,11 @@ Perform a HTTP request using any of the available methods and providing some dat
 
 ### HubSpot
 
-These native operations let you to integrate your leads into one of the most famous CRMs after the data has been validated or even enriched.
+These native operations let you to integrate your leads into one of the most popular CRMs after the data has been validated or even enriched.
 
 #### Upsert contact
 
-Creates a new contact or if it finds an one associated to the provided email, updates her information.
+Creates a new contact or updates their information, when there is one contact associated with the provided email.
 
 ### JSON
 
@@ -86,7 +86,7 @@ Parses the provided JSON string into a JSON object that can be referenced later.
 
 #### Serialize to JSON
 
-Useful when you use [Send request](#send-request) action and you need a JSON string. Nevertheless, this serialization is not needed for native integrations because they already serialize the data when needed.
+Useful when you use [Send request](#send-request) actions and you need a JSON string. Nevertheless, this serialization is not needed for native integrations because they already serialize the data when needed.
 
 ### MailChimp
 
@@ -94,7 +94,7 @@ Mailchimp is a marketing automation platform and an email marketing service. We 
 
 #### Subscribe to list
 
-It subscribes a new email address to the configured newsletter or updates her information if the provided email address is already subscribed to it.
+It subscribes a new email address to the configured newsletter or updates their information if the provided email address is already subscribed to it.
 
 ### MailJet
 
@@ -106,7 +106,7 @@ It sends a transactional email to the provided address. You can define its conte
 
 ### SendGrid
 
-Deliver your transactional and marketing emails through one of the most famous email delivery platform. 
+Deliver your transactional and marketing emails through one of the most famous email delivery platforms.
 
 #### Send email
 
@@ -114,7 +114,7 @@ This action sends the same email template to several recipients replacing the va
 
 ### Slack
 
-It is one of the most famous tools for team communication and collaboration. It became famous for his easy of integration with any external system.
+It is one of the most popular tools for team communication and collaboration. One of the reasons for its popularity is its easy integrations with any external system.
 
 #### Post message
 
@@ -126,7 +126,7 @@ Multiplatform application for instant messaging compatible with both smartphones
 
 #### Send Message
 
-Send a message to the specified person using a bot that you have created using [BotFather](https://core.telegram.org/bots#6-botfather), the bot they have for creating and managing custom bots.
+Send a message to the specified person using a bot that you have created using [BotFather](https://core.telegram.org/bots#6-botfather) — the bot for creating and managing custom bots.
 
 ### Twilio
 
