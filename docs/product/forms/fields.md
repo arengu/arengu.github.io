@@ -3,8 +3,6 @@ id: fields
 title: Fields
 ---
 
-Our forms module supports a wide variety of fields with different validation rules and visual styles for any type of data you want to collect in your projects.
-
 ## Types
 
 This section explains all the different fields we support. Its visual representation varies in function of the type from native browser components to custom ones with a UX better than their original equivalents.
@@ -98,6 +96,16 @@ Input that expects a phone. Accepted phones depend on field configuration.
 **Visual representation:** Standard browser input for a tel field.
 
 **API requirement:** String matching E.164 numbering plan.
+
+### Social login
+
+Enables login with the social network of your choice.
+
+**Configurable rules:** List of allowed providers, including their corresponding client identifiers and scopes.
+
+**Visual representation:** Buttons following the corresponding color schema of each social network.
+
+**API requirement:** JSON object specifying provider and access token.
 
 ### Text field
 
@@ -218,3 +226,29 @@ Specifies the possible options that a user can set for a field. This rule can be
 **Useful for:** Setting the company departments or specifying the available sizes of a t-shirt.
 
 **Available for:** [Choice](#choice-field) and [Dropdown](#dropdown-field) fields.
+
+## Settings
+
+Every field can be configured by determining its settings. These are the available settings to personalize the fields of your form. Apart from these, each field may have particular settings of its own.
+
+### Hint Text
+
+It adds an additional text below the label. For instance, in order to add a small explanation for the users. It supports dynamic values based on previous user values.
+
+### Label
+
+It shows or hides the main label of the field. To change the text on the label, click on it on the form editor. It supports dynamic values based on previous user values.
+
+### Placeholder
+
+It adds additional information that is displayed in the form field. It is often used to display the format of the value, in order to ease the filling process for the submitters. For instance, when indicating the format of a promotional code: _AA123_.
+
+### Required
+
+It sets a form field as mandatory. If a field is mandatory and the user does not fill it, the form will not be submitted.
+
+### Transient
+
+It avoids field data to be stored in Arengu’s systems.
+
+To ease the setup of your forms, some form fields come with predefined settings. For instance, passwords are a sensitive datum — you probably do not want your users’ passwords to be stored in Arengu’s systems, so this field is marked as transient by default.

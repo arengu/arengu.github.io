@@ -35,6 +35,8 @@ Every time a payment is collected using Stripe, it generates an invoice associat
 
 **Certified as:** [PCI Level 1 Service Provider](http://www.visa.com/splisting/searchGrsp.do?companyNameCriteria=stripe,%20inc)
 
+**API setting:** In order to integrate Stripe in your payment form, insert both a _Private key_ and a _Public key_. To obtain them, go to your Stripe account and find them under _Developers_ > _API keys_.
+
 ## Security
 
 Payments are an important activity for us, so we put a lot of effort into making it as safe as possible for both our customers and your users.
